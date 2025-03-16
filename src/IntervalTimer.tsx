@@ -12,6 +12,7 @@ interface SettingControlProps {
 const SettingControl: React.FC<SettingControlProps> = ({ value, onChange, label }) => {
   return (
     <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '5px' }} className='marg'>
+      <span style={{ width: '6em ' }}>{label}</span>
       <button className='pad-s fsize-m' onClick={() => onChange(value - 5)}>-5</button>
       <button className='pad-s fsize-m' onClick={() => onChange(value - 1)}>-1</button>
       <input
@@ -89,10 +90,10 @@ export function IntervalTimer() {
   }
 
   return (
-    <div style={{ padding: '5px' }}>
+    <div style={{ padding: '5px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <SettingControl value={workTime} label="Work Time" onChange={(value: number) => setWorkTime(value)} />
       <SettingControl value={restTime} label="Rest Time" onChange={(value: number) => setRestTime(value)} />
-      <div>
+      <div style={{ width: '100%' }}>
         <b>Settings</b>
         <br />
         Work Time: {workTime}
@@ -109,13 +110,13 @@ export function IntervalTimer() {
         </label>
       </div>
       <hr />
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-        <div>
-          <button className='pad-l marg' onClick={() => setIsPlaying(!isPlaying)}>
-            {!isPlaying && timer > 0 ? "Start" : "Pause"}
-          </button>
-          <button className='pad-l marg' onClick={() => reset()}>Reset</button>
-        </div>
+      <div>
+        <button className='pad-l marg' onClick={() => setIsPlaying(!isPlaying)}>
+          {!isPlaying && timer > 0 ? "Start" : "Pause"}
+        </button>
+        <button className='pad-l marg' onClick={() => reset()}>Reset</button>
+      </div>
+      <div>
         <label>
           <input
             type="checkbox"
