@@ -4,7 +4,5 @@ import { defineConfig } from 'vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  build: {
-    outDir: "out",
-  },
+  base: "/interval-timer-react-vite/"
 })
