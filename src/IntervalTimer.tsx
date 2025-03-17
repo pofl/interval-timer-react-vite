@@ -109,7 +109,7 @@ export function IntervalTimer() {
           Start with Rest
         </label>
       </div>
-      <hr />
+      <hr style={{ width: '100%' }} />
       <div>
         <button className='pad-l marg' onClick={() => setIsPlaying(!isPlaying)}>
           {!isPlaying && timer > 0 ? "Start" : "Pause"}
