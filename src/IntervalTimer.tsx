@@ -9,7 +9,7 @@ interface SettingControlProps {
   label: string,
 }
 
-const SettingControl: React.FC<SettingControlProps> = ({ value, onChange, label }) => {
+function SettingControl({ value, onChange, label }: SettingControlProps) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '5px' }} className='marg'>
       <span style={{ width: '6em ' }}>{label}</span>
