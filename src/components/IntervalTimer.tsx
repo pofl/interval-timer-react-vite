@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import ScreenWake from "./ScreenWake";
 import { SettingControl } from "./SettingControl";
 
 const sound = new Audio('https://cdn.freesound.org/previews/351/351550_3450800-lq.mp3');
@@ -62,6 +63,8 @@ export function IntervalTimer() {
 
   return (
     <div style={{ padding: '5px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <ScreenWake />
+      <hr style={{ width: '100%' }} />
       <SettingControl value={workTime} label="Work Time" onChange={(value: number) => setWorkTime(value)} />
       <SettingControl value={restTime} label="Rest Time" onChange={(value: number) => setRestTime(value)} />
       <div style={{ width: '100%' }}>
