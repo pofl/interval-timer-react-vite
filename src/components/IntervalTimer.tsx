@@ -2,7 +2,12 @@ import { useEffect, useState } from "react";
 import ScreenWake from "./ScreenWake";
 import { SettingControl } from "./SettingControl";
 
-const sound = new Audio('https://cdn.freesound.org/previews/351/351550_3450800-lq.mp3');
+// const sound = new Audio('https://cdn.freesound.org/previews/351/351550_3450800-lq.mp3'); // ding
+const sound = new Audio('https://cdn.freesound.org/previews/366/366102_6687700-lq.mp3'); // gentle clong
+// https://cdn.freesound.org/previews/446/446114_758593-lq.mp3 // jingly clong
+// https://cdn.freesound.org/previews/394/394795_6887623-lq.mp3 // glass ding
+// https://cdn.freesound.org/previews/615/615949_13086280-lq.mp3 // cash ding
+// https://cdn.freesound.org/previews/187/187306_2094213-lq.mp3 // train door
 
 export function IntervalTimer() {
   const [storageKeyWorkTime, storageKeyRestTime, storageKeyPlaySound, storageKeyStartWithRest] = ['workTime', 'restTime', 'playSound', 'startWithRest'];
