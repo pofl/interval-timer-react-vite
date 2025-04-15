@@ -26,19 +26,19 @@ function ReactWakeLock() {
 
   return (
     <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center',  }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
-          <p style={{ fontSize: '18px', fontWeight: 'bold' }}>Prevent Screen Sleep</p>
+          <p style={{ fontWeight: 'bold' }}>Prevent Screen Sleep</p>
         </div>
         {error && (
-          <p style={{ color: 'red', fontSize: '14px' }}>
+          <p style={{ color: 'red' }}>
             <span style={{ fontWeight: 'bold' }}>Error:</span> {error}
           </p>
         )}
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <button
             onClick={handleToggle}
-            disabled={!isSupported }
+            disabled={!isSupported}
             style={{
               padding: '10px 20px',
               backgroundColor: isLocked ? 'green' : 'gray',
@@ -54,21 +54,15 @@ function ReactWakeLock() {
       </div>
 
       <div style={{ marginBottom: '10px' }}>
-        <p style={{fontSize: '14px', color: 'gray' }}>Is Supported: {isSupported ? 'Yes' : 'No'}</p>
-        <p style={{ fontSize: '14px', color: 'gray' }}>
+        <p style={{ color: 'gray' }}>Is Supported: {isSupported ? 'Yes' : 'No'}</p>
+        <p style={{ color: 'gray' }}>
           {isSupported
             ? isLocked
-              ? "Screen wake lock is active.  The screen will stay on."
-              : "Screen wake lock is inactive. The screen may turn off."
+              ? <span style={{ color: 'green' }}>Wake lock acquired. The screen may turn off.</span>
+              : <span style={{ color: 'gray' }}>Wake lock not active. The screen will stay on.</span>
             : "Screen Wake Lock API is not supported in this browser."
           }
         </p>
-        {isLocked && (
-          <p style={{ color: 'green', fontSize: '14px' }}>Wake lock acquired</p>
-        )}
-        {!isLocked && isSupported && (
-          <p style={{ color: 'gray', fontSize: '14px' }}>Wake lock not active</p>
-        )}
       </div>
 
       {error && (
