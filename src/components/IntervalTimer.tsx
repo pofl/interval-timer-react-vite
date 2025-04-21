@@ -89,26 +89,24 @@ export function IntervalTimer() {
 
       <hr style={{ width: '100%' }} />
 
-      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-        <tbody>
-          <tr>
-        <td style={{ padding: '0.5em', border: '1px solid #ccc' }}>Work Time</td>
-        <td style={{ padding: '0.5em', border: '1px solid #ccc', textAlign: 'right' }}>{workTime}</td>
-          </tr>
-          <tr>
-        <td style={{ padding: '0.5em', border: '1px solid #ccc' }}>Rest Time</td>
-        <td style={{ padding: '0.5em', border: '1px solid #ccc', textAlign: 'right' }}>{restTime}</td>
-          </tr>
-          <tr>
-        <td style={{ padding: '0.5em', border: '1px solid #ccc' }}>Mode</td>
-        <td style={{ padding: '0.5em', border: '1px solid #ccc', textAlign: 'right' }}>{modes[mode]}</td>
-          </tr>
-          <tr>
-        <td style={{ padding: '0.5em', border: '1px solid #ccc' }}>Remaining</td>
-        <td style={{ padding: '0.5em', border: '1px solid #ccc', textAlign: 'right' }}><b>{timer} / {maxTime}</b></td>
-          </tr>
-        </tbody>
-      </table>
+      <div className="flex flex-col">
+        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1em' }}>
+          <div>Work Time</div>
+          <div>{workTime}</div>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1em' }}>
+          <div>Rest Time</div>
+          <div>{restTime}</div>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1em' }}>
+          <div>Mode</div>
+          <div>{modes[mode]}</div>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1em' }}>
+          <div>Remaining</div>
+          <div><b>{timer} / {maxTime}</b></div>
+        </div>
+      </div>
 
       <div>
         <label>
