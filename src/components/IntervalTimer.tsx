@@ -67,10 +67,6 @@ export function IntervalTimer() {
 
   return (
     <div style={{ padding: '5px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <ReactWakeLock />
-
-      <hr style={{ width: '100%' }} />
-
       <SettingControl value={workTime} label="Work Time" onChange={(value: number) => setWorkTime(value)} />
       <SettingControl value={restTime} label="Rest Time" onChange={(value: number) => setRestTime(value)} />
       <div>
@@ -125,6 +121,10 @@ export function IntervalTimer() {
           {!isPlaying && timer > 0 ? "Start" : "Pause"}
         </button>
       </div>
+
+      <hr style={{ width: '100%' }} />
+
+      <ReactWakeLock />
     </div>
   );
 }

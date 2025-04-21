@@ -28,41 +28,34 @@ function ReactWakeLock() {
     <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
-          <p style={{ fontWeight: 'bold' }}>Prevent Screen Sleep</p>
+          <div>
+            <b>Screen Sleep Prevention</b>
+          </div>
+          {error && (
+            <p style={{ color: 'red' }}>
+            <b>Error:</b> {error}
+            </p>
+          )}
+          <div style={{ color: 'gray' }}>Is Supported: {isSupported ? 'Yes' : 'No'}</div>
+          <div style={isLocked?{color:'green'}:{}}>Is Active: {isLocked ? 'Yes' : 'No'}</div>
         </div>
-        {error && (
-          <p style={{ color: 'red' }}>
-            <span style={{ fontWeight: 'bold' }}>Error:</span> {error}
-          </p>
-        )}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <button
-            onClick={handleToggle}
-            disabled={!isSupported}
-            style={{
-              padding: '10px 20px',
-              backgroundColor: isLocked ? 'green' : 'gray',
-              color: 'white',
-              border: 'none',
-              borderRadius: '5px',
-              cursor: (isSupported) ? 'pointer' : 'not-allowed',
-            }}
-          >
-            {isLocked ? 'Turn Off' : 'Turn On'}
-          </button>
-        </div>
+        <button
+          onClick={handleToggle}
+          disabled={!isSupported}
+          style={{
+            padding: '10px 20px',
+            backgroundColor: isLocked ? 'green' : 'gray',
+            color: 'white',
+            border: 'none',
+            borderRadius: '5px',
+            cursor: (isSupported) ? 'pointer' : 'not-allowed',
+          }}
+        >
+          {isLocked ? 'Turn Off' : 'Turn On'}
+        </button>
       </div>
 
-      <div style={{ marginBottom: '10px' }}>
-        <p style={{ color: 'gray' }}>Is Supported: {isSupported ? 'Yes' : 'No'}</p>
-        <p style={{ color: 'gray' }}>
-          {isSupported
-            ? isLocked
-              ? <span style={{ color: 'green' }}>Wake lock acquired. The screen may turn off.</span>
-              : <span style={{ color: 'gray' }}>Wake lock not active. The screen will stay on.</span>
-            : "Screen Wake Lock API is not supported in this browser."
-          }
-        </p>
+      <div>
       </div>
 
       {error && (
