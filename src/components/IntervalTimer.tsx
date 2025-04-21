@@ -89,24 +89,26 @@ export function IntervalTimer() {
 
       <hr style={{ width: '100%' }} />
 
-      <div className="flex flex-col">
-        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1em' }}>
-          <div>Work Time</div>
-          <div>{workTime}</div>
-        </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1em' }}>
-          <div>Rest Time</div>
-          <div>{restTime}</div>
-        </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1em' }}>
-          <div>Mode</div>
-          <div>{modes[mode]}</div>
-        </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1em' }}>
-          <div>Remaining</div>
-          <div><b>{timer} / {maxTime}</b></div>
-        </div>
-      </div>
+      <table style={{ borderCollapse: 'collapse' }}>
+        <tbody>
+          <tr>
+            <td style={{ padding: '0 0.5em' }}>Work Time</td>
+            <td style={{ padding: '0 0.5em' }}>{workTime}</td>
+          </tr>
+          <tr>
+            <td style={{ padding: '0 0.5em' }}>Rest Time</td>
+            <td style={{ padding: '0 0.5em' }}>{restTime}</td>
+          </tr>
+          <tr>
+            <td style={{ padding: '0 0.5em' }}>Mode</td>
+            <td style={{ padding: '0 0.5em' }}>{modes[mode]}</td>
+          </tr>
+          <tr>
+            <td style={{ padding: '0 0.5em' }}>Remaining</td>
+            <td style={{ padding: '0 0.5em' }}><b>{timer} / {maxTime}</b></td>
+          </tr>
+        </tbody>
+      </table>
 
       <div>
         <label>
