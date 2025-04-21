@@ -89,14 +89,34 @@ export function IntervalTimer() {
       </div>
 
       <hr style={{ width: '100%' }} />
+      <div className="flex flex-col">
+        <div className="flex flex-row">
+          <div>Work Time</div>
+          <div>{workTime}</div>
+        </div>
+        <div className="flex flex-row">
+          <div>Rest Time</div>
+          <div>{restTime}</div>
+        </div>
+        <div className="flex flex-row">
+          <div>Mode</div>
+          <div><b>{modes[mode]}</b></div>
+        </div>
+        <div className="flex flex-row">
+          <div>Max</div>
+          <div><b>{maxTime}</b></div>
+        </div>
+        <div className="flex flex-row">
+          <div>Now</div>
+          <div><b>{texts[mode]}</b></div>
+        </div>
+        <div className="flex flex-row">
+          <div>Remaining</div>
+          <div><b>{timer} / {maxTime}</b></div>
+        </div>
 
+      </div>
       <div>
-        <div>Work Time: {workTime}</div>
-        <div>Rest Time: {restTime}</div>
-        <div>Mode: <b>{modes[mode]}</b></div>
-        <div>Max: <b>{maxTime}</b></div>
-        <div>Now: <b>{texts[mode]}</b></div>
-        <div>Remaining: <b>{timer} / {maxTime}</b></div>
         <label>
           Play sound
           <input
