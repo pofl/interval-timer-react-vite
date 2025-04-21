@@ -69,44 +69,47 @@ export function IntervalTimer() {
   return (
     <div style={{ padding: '5px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <ReactWakeLock />
+
       <hr style={{ width: '100%' }} />
+
       <SettingControl value={workTime} label="Work Time" onChange={(value: number) => setWorkTime(value)} />
       <SettingControl value={restTime} label="Rest Time" onChange={(value: number) => setRestTime(value)} />
-      <div style={{ width: '100%' }}>
-        <b>Settings</b>
-        <br />
-        Work Time: {workTime}
-        <br />
-        Rest Time: {restTime}
-        <br />
+      <div>
         <label>
+          Start with Rest
           <input
             type="checkbox"
             checked={startWithRest}
             onChange={(e) => setStartWithRest(e.target.checked)}
           />
-          Start with Rest
         </label>
       </div>
-      <hr style={{ width: '100%' }} />
       <div>
-        <button className='pad-l marg' onClick={() => setIsPlaying(!isPlaying)}>
-          {!isPlaying && timer > 0 ? "Start" : "Pause"}
-        </button>
         <button className='pad-l marg' onClick={() => reset()}>Reset</button>
       </div>
+
+      <hr style={{ width: '100%' }} />
+
       <div>
+        <div>Work Time: {workTime}</div>
+        <div>Rest Time: {restTime}</div>
+        <div>Mode: <b>{modes[mode]}</b></div>
+        <div>Max: <b>{maxTime}</b></div>
+        <div>Now: <b>{texts[mode]}</b></div>
+        <div>Remaining: <b>{timer} / {maxTime}</b></div>
         <label>
+          Play sound
           <input
             type="checkbox"
             checked={playSound}
             onChange={(e) => setPlaySound(e.target.checked)}
           />
-          Play sound
         </label>
-        <div>Now: {texts[mode]}</div>
-        <div>Remaining: {timer}</div>
-        <div>Total: {maxTime}</div>
+      </div>
+      <div>
+        <button className='pad-l marg' onClick={() => setIsPlaying(!isPlaying)}>
+          {!isPlaying && timer > 0 ? "Start" : "Pause"}
+        </button>
       </div>
     </div>
   );
