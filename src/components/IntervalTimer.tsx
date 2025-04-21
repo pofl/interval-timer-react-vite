@@ -25,7 +25,6 @@ export function IntervalTimer() {
   useEffect(() => { localStorage.setItem(storageKeyStartWithRest, String(startWithRest)) }, [startWithRest])
 
   const modes = ['work', 'rest'];
-  const texts = ['Work Time', 'Rest Time'];
   const getModeTime = [() => workTime, () => restTime];
 
   const initialMode = startWithRest ? 'rest' : 'work'
@@ -90,27 +89,19 @@ export function IntervalTimer() {
 
       <hr style={{ width: '100%' }} />
       <div className="flex flex-col">
-        <div className="flex flex-row">
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1em', }}>
           <div>Work Time</div>
           <div>{workTime}</div>
         </div>
-        <div className="flex flex-row">
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1em', }}>
           <div>Rest Time</div>
           <div>{restTime}</div>
         </div>
-        <div className="flex flex-row">
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1em', }}>
           <div>Mode</div>
-          <div><b>{modes[mode]}</b></div>
+          <div>{modes[mode]}</div>
         </div>
-        <div className="flex flex-row">
-          <div>Max</div>
-          <div><b>{maxTime}</b></div>
-        </div>
-        <div className="flex flex-row">
-          <div>Now</div>
-          <div><b>{texts[mode]}</b></div>
-        </div>
-        <div className="flex flex-row">
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1em', }}>
           <div>Remaining</div>
           <div><b>{timer} / {maxTime}</b></div>
         </div>
