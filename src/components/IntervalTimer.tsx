@@ -71,12 +71,12 @@ export function IntervalTimer() {
       <SettingControl value={restTime} label="Rest Time" onChange={(value: number) => setRestTime(value)} />
       <div>
         <label>
-          Start with Rest
           <input
             type="checkbox"
             checked={startWithRest}
             onChange={(e) => setStartWithRest(e.target.checked)}
           />
+          Start with Rest
         </label>
       </div>
       <div>
@@ -108,12 +108,12 @@ export function IntervalTimer() {
 
       <div>
         <label>
-          Play sound
           <input
             type="checkbox"
             checked={playSound}
             onChange={(e) => setPlaySound(e.target.checked)}
           />
+          Play sound
         </label>
       </div>
       <div>
