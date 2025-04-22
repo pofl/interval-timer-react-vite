@@ -37,9 +37,6 @@ function ReactWakeLock({ isSupported, error, isLocked, handleToggle }: ReactWake
         </button>
       </div>
 
-      <div>
-      </div>
-
       {error && (
         <div style={{ backgroundColor: '#fecaca', borderColor: '#f87171', color: '#b91c1c', padding: '10px', borderRadius: '5px', margin: '10px 0' }}>
           <p style={{ fontWeight: 'bold' }}>Error</p>
