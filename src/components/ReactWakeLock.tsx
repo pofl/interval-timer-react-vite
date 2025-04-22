@@ -1,29 +1,11 @@
-import { useMemo, useState } from "react";
-import { useWakeLock } from "../hooks/use-wake-lock";
+type ReactWakeLockProps = {
+  isSupported: boolean,
+  error: string | null,
+  isLocked: boolean,
+  handleToggle: () => Promise<void>
+};
 
-function ReactWakeLock() {
-  const [error, setError] = useState<string | null>(null);
-  const { isSupported, released, request, release } = useWakeLock({
-    onError: (error) => {
-      alert('An error happened 💥')
-      setError(error.message || 'An unknown error occurred');
-    },
-    reacquireOnPageVisible: true,
-  });
-
-  const isLocked = useMemo(() => {
-    if (released === undefined) return false;
-    return !released;
-  }, [released]);
-
-  const handleToggle = async () => {
-    if (isLocked) {
-      await release();
-    } else {
-      await request();
-    }
-  };
-
+function ReactWakeLock({ isSupported, error, isLocked, handleToggle }: ReactWakeLockProps) {
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

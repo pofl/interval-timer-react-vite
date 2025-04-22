@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useWakeLock } from "../hooks/use-wake-lock";
 import ReactWakeLock from "./ReactWakeLock";
 import { SettingControl } from "./SettingControl";
 
@@ -65,6 +66,28 @@ export function IntervalTimer() {
     enterMode(newMode);
   }
 
+  const [error, setError] = useState<string | null>(null);
+  const { isSupported, released, request, release } = useWakeLock({
+    onError: (error) => {
+      alert('error in wake lock: ' + error.message);
+      setError(error.message || 'An unknown error occurred');
+    },
+    reacquireOnPageVisible: true,
+  });
+
+  const isLocked = useMemo(() => {
+    if (released === undefined) return false;
+    return !released;
+  }, [released]);
+
+  const handleToggle = async () => {
+    if (isLocked) {
+      await release();
+    } else {
+      await request();
+    }
+  };
+
   return (
     <div style={{ padding: '5px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <SettingControl value={workTime} label="Work Time" onChange={(value: number) => setWorkTime(value)} />
@@ -124,7 +147,7 @@ export function IntervalTimer() {
 
       <hr style={{ width: '100%' }} />
 
-      <ReactWakeLock />
+      <ReactWakeLock isSupported={isSupported} error={error} isLocked={isLocked} handleToggle={handleToggle} />
     </div>
   );
 }
