@@ -36,7 +36,7 @@ function ReactWakeLock() {
               <b>Error:</b> {error}
             </p>
           )}
-          <div style={{ color: 'gray' }}>Is Supported: {isSupported ? 'Yes' : 'No'}</div>
+          <div>Is Supported: {isSupported ? 'Yes' : 'No'}</div>
           <div style={isLocked ? { color: 'green' } : {}}>Is Active: {isLocked ? 'Yes' : 'No'}</div>
         </div>
         <button
