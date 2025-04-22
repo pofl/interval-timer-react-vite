@@ -88,6 +88,12 @@ export function IntervalTimer() {
     }
   };
 
+  useEffect(() => {
+    if (isPlaying) {
+      request();
+    }
+  }, [isPlaying]);
+
   return (
     <div style={{ padding: '5px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <SettingControl value={workTime} label="Work Time" onChange={(value: number) => setWorkTime(value)} />
