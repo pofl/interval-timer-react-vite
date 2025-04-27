@@ -6,29 +6,24 @@ interface SettingControlProps {
 
 export function SettingControl({value, onChange, label}: SettingControlProps) {
   return (
-    <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '5px'}} className="marg">
-      <span style={{width: '6em '}}>{label}</span>
-      <button className="pad-s fsize-m" onClick={() => onChange(value - 5)}>
+    <div className="m-1 flex flex-wrap items-center gap-1">
+      <span className="w-25">{label}</span>
+      <button className="bg-sand-500 rounded-sm px-2 py-1.5 text-xs" onClick={() => onChange(value - 5)}>
         -5
       </button>
-      <button className="pad-s fsize-m" onClick={() => onChange(value - 1)}>
+      <button className="bg-sand-500 rounded-sm px-2 py-1.5 text-xs" onClick={() => onChange(value - 1)}>
         -1
       </button>
       <input
-        style={{
-          flexGrow: 1,
-          flexBasis: 0,
-          minWidth: '2em',
-        }}
-        className="pad-s fsize-m"
+        className="border-sand-500 max-w-25 min-w-[2em] grow basis-0 rounded-sm border-1 px-2 py-1.5 text-xs"
         type="number"
         value={value}
         onChange={(e) => onChange(parseInt(e.target.value))}
       />
-      <button className="pad-s fsize-m" onClick={() => onChange(value + 1)}>
+      <button className="bg-sand-500 rounded-sm px-2 py-1.5 text-xs" onClick={() => onChange(value + 1)}>
         +1
       </button>
-      <button className="pad-s fsize-m" onClick={() => onChange(value + 5)}>
+      <button className="bg-sand-500 rounded-sm px-2 py-1.5 text-xs" onClick={() => onChange(value + 5)}>
         +5
       </button>
     </div>

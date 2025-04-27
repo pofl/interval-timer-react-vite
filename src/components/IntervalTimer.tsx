@@ -1,6 +1,6 @@
-import {useEffect, useMemo, useState} from 'react';
-import {useWakeLock} from '../hooks/use-wake-lock';
-import {SettingControl} from './SettingControl';
+import { useEffect, useMemo, useState } from 'react';
+import { useWakeLock } from '../hooks/use-wake-lock';
+import { SettingControl } from './SettingControl';
 
 // const sound = new Audio('https://cdn.freesound.org/previews/351/351550_3450800-lq.mp3'); // ding
 const sound = new Audio('https://cdn.freesound.org/previews/366/366102_6687700-lq.mp3'); // gentle clong
@@ -111,41 +111,41 @@ export function IntervalTimer() {
   }, [isPlaying]);
 
   return (
-    <div style={{padding: '5px', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-      <h2>Interval Timer</h2>
+    <div className="flex flex-col items-center p-1">
+      <h1 className="mb-4 text-2xl font-bold">Interval Timer</h1>
       <SettingControl value={workTime} label="Work Time" onChange={(value: number) => setWorkTime(value)} />
       <SettingControl value={restTime} label="Rest Time" onChange={(value: number) => setRestTime(value)} />
       <div>
-        <label>
+        <label className="space-x-1">
           <input type="checkbox" checked={startWithRest} onChange={(e) => setStartWithRest(e.target.checked)} />
-          Start with Rest
+          <span>Start with Rest</span>
         </label>
       </div>
       <div>
-        <button className="pad-l marg" onClick={() => reset()}>
+        <button className="bg-sand-500 m-1 rounded-sm px-4 py-1.5" onClick={() => reset()}>
           Reset
         </button>
       </div>
 
-      <hr style={{width: '100%'}} />
+      <hr className="my-3 w-full" />
 
-      <table style={{borderCollapse: 'collapse'}}>
+      <table className="mb-2 border-collapse">
         <tbody>
           <tr>
-            <td style={{padding: '0 0.5em'}}>Work Time</td>
-            <td style={{padding: '0 0.5em'}}>{workTime}</td>
+            <td className="px-2">Work Time</td>
+            <td className="px-2">{workTime}</td>
           </tr>
           <tr>
-            <td style={{padding: '0 0.5em'}}>Rest Time</td>
-            <td style={{padding: '0 0.5em'}}>{restTime}</td>
+            <td className="px-2">Rest Time</td>
+            <td className="px-2">{restTime}</td>
           </tr>
           <tr>
-            <td style={{padding: '0 0.5em'}}>Mode</td>
-            <td style={{padding: '0 0.5em'}}>{modes[mode]}</td>
+            <td className="px-2">Mode</td>
+            <td className="px-2">{modes[mode]}</td>
           </tr>
           <tr>
-            <td style={{padding: '0 0.5em'}}>Remaining</td>
-            <td style={{padding: '0 0.5em'}}>
+            <td className="px-2">Remaining</td>
+            <td className="px-2">
               <b>
                 {timer} / {maxTime}
               </b>
@@ -161,21 +161,21 @@ export function IntervalTimer() {
           ) : !isSupported ? (
             'Screen Lock Prevention Not Supported'
           ) : (
-            <label>
+            <label className="space-x-1">
               <input type="checkbox" checked={isLocked} onChange={handleToggle} />
-              Keep Screen On
+              <span>Keep Screen On</span>
             </label>
           )}
         </div>
         <div>
-          <label>
+          <label className="space-x-1">
             <input type="checkbox" checked={playSound} onChange={(e) => setPlaySound(e.target.checked)} />
-            Play sound
+            <span>Play sound</span>
           </label>
         </div>
       </div>
       <div>
-        <button className="pad-l marg" onClick={() => setIsPlaying(!isPlaying)}>
+        <button className="bg-sand-500 m-1 rounded-sm px-4 py-1.5" onClick={() => setIsPlaying(!isPlaying)}>
           {!isPlaying && timer > 0 ? 'Start' : 'Pause'}
         </button>
       </div>
