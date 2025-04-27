@@ -95,6 +95,7 @@ export function IntervalTimer() {
 
   return (
     <div style={{ padding: '5px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <h2>Interval Timer</h2>
       <SettingControl value={workTime} label="Work Time" onChange={(value: number) => setWorkTime(value)} />
       <SettingControl value={restTime} label="Rest Time" onChange={(value: number) => setRestTime(value)} />
       <div>
@@ -136,8 +137,8 @@ export function IntervalTimer() {
 
       <div>
         <div>
-            {
-              error ? (
+          {
+            error ? (
               <span>Screen Lock Prevention Error: {error}</span>
             ) : !isSupported ? (
               "Screen Lock Prevention Not Supported"
@@ -157,9 +158,9 @@ export function IntervalTimer() {
           <label>
             <input
               type="checkbox"
-            checked={playSound}
-            onChange={(e) => setPlaySound(e.target.checked)}
-          />
+              checked={playSound}
+              onChange={(e) => setPlaySound(e.target.checked)}
+            />
             Play sound
           </label>
         </div>
