@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
 import { useWakeLock } from "../hooks/use-wake-lock";
-import ReactWakeLock from "./ReactWakeLock";
 import { SettingControl } from "./SettingControl";
 
 // const sound = new Audio('https://cdn.freesound.org/previews/351/351550_3450800-lq.mp3'); // ding
@@ -125,21 +124,6 @@ export function IntervalTimer() {
             <td style={{ padding: '0 0.5em' }}>{restTime}</td>
           </tr>
           <tr>
-            <td style={{ padding: '0 0.5em' }}>Keep Screen On</td>
-            <td style={{ padding: '0 0.5em' }}>
-              <span onClick={handleToggle} >
-                {error ?
-                  <span>Error: {error}</span> :
-                  !isSupported ?
-                    "Not Supported" :
-                    isLocked ?
-                      <span style={{ color: 'green' }}>On</span> :
-                      "Off"
-                }
-              </span>
-            </td>
-          </tr>
-          <tr>
             <td style={{ padding: '0 0.5em' }}>Mode</td>
             <td style={{ padding: '0 0.5em' }}>{modes[mode]}</td>
           </tr>
@@ -151,24 +135,40 @@ export function IntervalTimer() {
       </table>
 
       <div>
-        <label>
-          <input
-            type="checkbox"
+        <div>
+            {
+              error ? (
+              <span>Screen Lock Prevention Error: {error}</span>
+            ) : !isSupported ? (
+              "Screen Lock Prevention Not Supported"
+            ) : (
+              <label>
+                <input
+                  type="checkbox"
+                  checked={isLocked}
+                  onChange={handleToggle}
+                />
+                Keep Screen On
+              </label>
+            )
+          }
+        </div>
+        <div>
+          <label>
+            <input
+              type="checkbox"
             checked={playSound}
             onChange={(e) => setPlaySound(e.target.checked)}
           />
-          Play sound
-        </label>
+            Play sound
+          </label>
+        </div>
       </div>
       <div>
         <button className='pad-l marg' onClick={() => setIsPlaying(!isPlaying)}>
           {!isPlaying && timer > 0 ? "Start" : "Pause"}
         </button>
       </div>
-
-      <hr style={{ width: '100%' }} />
-
-      <ReactWakeLock isSupported={isSupported} error={error} isLocked={isLocked} handleToggle={handleToggle} />
     </div>
   );
 }
