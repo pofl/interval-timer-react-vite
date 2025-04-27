@@ -127,7 +127,7 @@ export function IntervalTimer() {
         </button>
       </div>
 
-      <hr className="my-3 w-full" />
+      <hr className="my-3 w-full border-sand-500 border" />
 
       <table className="mb-2 border-collapse">
         <tbody>
