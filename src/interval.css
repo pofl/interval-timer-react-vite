@@ -8,6 +8,13 @@ body {
   margin: 0;
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 #root {
   max-width: 25em;
   margin: auto;
