@@ -125,6 +125,21 @@ export function IntervalTimer() {
             <td style={{ padding: '0 0.5em' }}>{restTime}</td>
           </tr>
           <tr>
+            <td style={{ padding: '0 0.5em' }}>Keep Screen On</td>
+            <td style={{ padding: '0 0.5em' }}>
+              <span onClick={handleToggle} >
+                {error ?
+                  <span>Error: {error}</span> :
+                  !isSupported ?
+                    "Not Supported" :
+                    isLocked ?
+                      <span style={{ color: 'green' }}>On</span> :
+                      "Off"
+                }
+              </span>
+            </td>
+          </tr>
+          <tr>
             <td style={{ padding: '0 0.5em' }}>Mode</td>
             <td style={{ padding: '0 0.5em' }}>{modes[mode]}</td>
           </tr>
