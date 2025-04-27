@@ -2,8 +2,7 @@
 
 import * as React from 'react';
 
-const warn = (content: string) =>
-  console.warn('[react-screen-wake-lock]: ' + content);
+const warn = (content: string) => console.warn('[react-screen-wake-lock]: ' + content);
 
 export interface WakeLockOptions {
   onError?: (error: Error) => void;
@@ -28,14 +27,10 @@ export const useWakeLock = ({
     async (type: WakeLockType = 'screen') => {
       const isWakeLockAlreadyDefined = wakeLock.current != null;
       if (!isSupported) {
-        return warn(
-          "Calling the `request` function has no effect, Wake Lock Screen API isn't supported"
-        );
+        return warn("Calling the `request` function has no effect, Wake Lock Screen API isn't supported");
       }
       if (isWakeLockAlreadyDefined) {
-        return warn(
-          'Calling `request` multiple times without `release` has no effect'
-        );
+        return warn('Calling `request` multiple times without `release` has no effect');
       }
 
       try {
@@ -60,9 +55,7 @@ export const useWakeLock = ({
   const release = React.useCallback(async () => {
     const isWakeLockUndefined = wakeLock.current == null;
     if (!isSupported) {
-      return warn(
-        "Calling the `release` function has no effect, Wake Lock Screen API isn't supported"
-      );
+      return warn("Calling the `release` function has no effect, Wake Lock Screen API isn't supported");
     }
 
     if (isWakeLockUndefined) {
