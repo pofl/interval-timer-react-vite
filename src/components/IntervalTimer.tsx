@@ -82,8 +82,13 @@ export function IntervalTimer() {
     enterMode(newMode);
   };
 
-  const [error, setError] = useState<string | null>(null);
-  const {isSupported, released, request, release} = useWakeLock({
+  const [wakeLockError, setError] = useState<string | null>(null);
+  const {
+    isSupported: wakeLockSupported,
+    released: wakeLockReleased,
+    request: requestWakeLock,
+    release: releaseWakeLock,
+  } = useWakeLock({
     onError: (error) => {
       alert('error in wake lock: ' + error.message);
       setError(error.message || 'An unknown error occurred');
@@ -91,22 +96,22 @@ export function IntervalTimer() {
     reacquireOnPageVisible: true,
   });
 
-  const isLocked = useMemo(() => {
-    if (released === undefined) return false;
-    return !released;
-  }, [released]);
+  const wakeLockLocked = useMemo(() => {
+    if (wakeLockReleased === undefined) return false;
+    return !wakeLockReleased;
+  }, [wakeLockReleased]);
 
-  const handleToggle = async () => {
-    if (isLocked) {
-      await release();
+  const handlewakeLockToggle = async () => {
+    if (wakeLockLocked) {
+      await releaseWakeLock();
     } else {
-      await request();
+      await requestWakeLock();
     }
   };
 
   useEffect(() => {
     if (isPlaying) {
-      request();
+      requestWakeLock();
     }
   }, [isPlaying]);
 
@@ -156,13 +161,13 @@ export function IntervalTimer() {
 
       <div>
         <div>
-          {error ? (
-            <span>Screen Lock Prevention Error: {error}</span>
-          ) : !isSupported ? (
+          {wakeLockError ? (
+            <span>Screen Lock Prevention Error: {wakeLockError}</span>
+          ) : !wakeLockSupported ? (
             'Screen Lock Prevention Not Supported'
           ) : (
             <label className="space-x-1">
-              <input type="checkbox" checked={isLocked} onChange={handleToggle} />
+              <input type="checkbox" checked={wakeLockLocked} onChange={handlewakeLockToggle} />
               <span>Keep Screen On</span>
             </label>
           )}
