@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { timerState, useIsPlaying, useRemainingTime } from '../hooks/timer-state';
 import { useWakeLock } from '../hooks/use-wake-lock';
 import { SettingControl } from './SettingControl';
 
@@ -44,29 +45,30 @@ export function IntervalTimer() {
 
   const initialMode = startWithRest ? 'rest' : 'work';
 
-  const [isPlaying, setIsPlaying] = useState(false);
+  const isPlaying = useIsPlaying();
+  const remainingTime = useRemainingTime();
+
   const [mode, setMode] = useState(modes.indexOf(initialMode));
-  const [timer, setTimer] = useState(getModeTime[mode]());
   const [maxTime, setMaxTime] = useState(getModeTime[mode]());
 
   useEffect(() => {
     if (!isPlaying) {
       return;
     }
-    if (timer <= 0) {
+    if (remainingTime <= 0) {
       if (playSound) {
         sound.play();
       }
       const interval = setInterval(switchMode, 500);
       return () => clearInterval(interval);
     } else {
-      const interval = setInterval(() => setTimer((prevTimer) => prevTimer - 1), 1000);
+      const interval = setInterval(() => timerState.send({type: 'tick'}), 1000);
       return () => clearInterval(interval);
     }
-  }, [timer, isPlaying]);
+  }, [remainingTime, isPlaying]);
 
   const reset = () => {
-    setIsPlaying(false);
+    timerState.send({type: 'setIsPlaying', isPlaying: false});
     enterMode(modes.indexOf(initialMode));
   };
 
@@ -74,7 +76,7 @@ export function IntervalTimer() {
     const newMaxTime = getModeTime[newMode]();
     setMode(newMode);
     setMaxTime(newMaxTime);
-    setTimer(newMaxTime);
+    timerState.send({type: 'setRemainingTime', time: newMaxTime});
   };
 
   const switchMode = () => {
@@ -152,7 +154,7 @@ export function IntervalTimer() {
             <td className="px-2">Remaining</td>
             <td className="px-2">
               <b>
-                {timer} / {maxTime}
+                {remainingTime} / {maxTime}
               </b>
             </td>
           </tr>
@@ -180,8 +182,8 @@ export function IntervalTimer() {
         </div>
       </div>
       <div>
-        <button className="bg-sand-500 m-1 rounded-sm px-4 py-1.5" onClick={() => setIsPlaying(!isPlaying)}>
-          {!isPlaying && timer > 0 ? 'Start' : 'Pause'}
+        <button className="bg-sand-500 m-1 rounded-sm px-4 py-1.5" onClick={() => timerState.send({type: 'toggle'})}>
+          {!isPlaying && remainingTime > 0 ? 'Start' : 'Pause'}
         </button>
       </div>
     </div>
