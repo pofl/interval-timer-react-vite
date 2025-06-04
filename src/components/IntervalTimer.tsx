@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { Mode, modeStore, useMode } from '../hooks/mode-store';
 import { timerStore, useIsPlaying, useRemainingTime } from '../hooks/timer-store';
 import { useWakeLock } from '../hooks/use-wake-lock';
 import { SettingControl } from './SettingControl';
@@ -40,15 +41,21 @@ export function IntervalTimer() {
     localStorage.setItem(storageKeyStartWithRest, String(startWithRest));
   }, [startWithRest]);
 
-  const modes = ['work', 'rest'];
-  const getModeTime = [() => workTime, () => restTime];
-
-  const initialMode = startWithRest ? 'rest' : 'work';
+  const initialMode = startWithRest ? 'rest' : ('work' as Mode);
+  const getModeTime: Record<Mode, () => number> = {
+    work: () => workTime,
+    rest: () => restTime,
+  };
+  const mode = useMode();
+  useEffect(() => {
+    const newMaxTime = getModeTime[mode]();
+    setMaxTime(newMaxTime);
+    timerStore.send({type: 'setRemainingTime', time: newMaxTime});
+  }, [mode]);
 
   const isPlaying = useIsPlaying();
   const remainingTime = useRemainingTime();
 
-  const [mode, setMode] = useState(modes.indexOf(initialMode));
   const [maxTime, setMaxTime] = useState(getModeTime[mode]());
 
   useEffect(() => {
@@ -59,7 +66,7 @@ export function IntervalTimer() {
       if (playSound) {
         sound.play();
       }
-      const interval = setInterval(switchMode, 500);
+      const interval = setInterval(() => modeStore.send({type: 'switch'}), 500);
       return () => clearInterval(interval);
     } else {
       const interval = setInterval(() => timerStore.send({type: 'tick'}), 1000);
@@ -69,19 +76,7 @@ export function IntervalTimer() {
 
   const reset = () => {
     timerStore.send({type: 'setIsPlaying', isPlaying: false});
-    enterMode(modes.indexOf(initialMode));
-  };
-
-  const enterMode = (newMode: number) => {
-    const newMaxTime = getModeTime[newMode]();
-    setMode(newMode);
-    setMaxTime(newMaxTime);
-    timerStore.send({type: 'setRemainingTime', time: newMaxTime});
-  };
-
-  const switchMode = () => {
-    const newMode = (mode + 1) % modes.length;
-    enterMode(newMode);
+    modeStore.send({type: 'setMode', mode: initialMode});
   };
 
   const [wakeLockError, setError] = useState<string | null>(null);
@@ -129,7 +124,7 @@ export function IntervalTimer() {
         </label>
       </div>
       <div>
-        <button className="bg-sand-500 m-1 rounded-sm px-4 py-1.5" onClick={() => reset()}>
+        <button className="bg-sand-500 m-1 rounded-sm px-4 py-1.5" onClick={reset}>
           Reset
         </button>
       </div>
@@ -148,7 +143,7 @@ export function IntervalTimer() {
           </tr>
           <tr>
             <td className="px-2">Mode</td>
-            <td className="px-2">{modes[mode]}</td>
+            <td className="px-2">{mode}</td>
           </tr>
           <tr>
             <td className="px-2">Remaining</td>
