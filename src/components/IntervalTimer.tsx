@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { timerState, useIsPlaying, useRemainingTime } from '../hooks/timer-state';
+import { timerStore, useIsPlaying, useRemainingTime } from '../hooks/timer-store';
 import { useWakeLock } from '../hooks/use-wake-lock';
 import { SettingControl } from './SettingControl';
 
@@ -62,13 +62,13 @@ export function IntervalTimer() {
       const interval = setInterval(switchMode, 500);
       return () => clearInterval(interval);
     } else {
-      const interval = setInterval(() => timerState.send({type: 'tick'}), 1000);
+      const interval = setInterval(() => timerStore.send({type: 'tick'}), 1000);
       return () => clearInterval(interval);
     }
   }, [remainingTime, isPlaying]);
 
   const reset = () => {
-    timerState.send({type: 'setIsPlaying', isPlaying: false});
+    timerStore.send({type: 'setIsPlaying', isPlaying: false});
     enterMode(modes.indexOf(initialMode));
   };
 
@@ -76,7 +76,7 @@ export function IntervalTimer() {
     const newMaxTime = getModeTime[newMode]();
     setMode(newMode);
     setMaxTime(newMaxTime);
-    timerState.send({type: 'setRemainingTime', time: newMaxTime});
+    timerStore.send({type: 'setRemainingTime', time: newMaxTime});
   };
 
   const switchMode = () => {
@@ -182,7 +182,7 @@ export function IntervalTimer() {
         </div>
       </div>
       <div>
-        <button className="bg-sand-500 m-1 rounded-sm px-4 py-1.5" onClick={() => timerState.send({type: 'toggle'})}>
+        <button className="bg-sand-500 m-1 rounded-sm px-4 py-1.5" onClick={() => timerStore.send({type: 'toggle'})}>
           {!isPlaying && remainingTime > 0 ? 'Start' : 'Pause'}
         </button>
       </div>

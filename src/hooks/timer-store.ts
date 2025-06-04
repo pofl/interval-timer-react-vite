@@ -1,7 +1,7 @@
 import { createStore } from '@xstate/store';
 import { useSelector } from '@xstate/store/react';
 
-export const timerState = createStore({
+export const timerStore = createStore({
   context: {
     remainingTime: 0,
     isPlaying: false,
@@ -31,5 +31,5 @@ export const timerState = createStore({
   },
 });
 
-export const useIsPlaying = () => useSelector(timerState, (state) => state.context.isPlaying);
-export const useRemainingTime = () => useSelector(timerState, (state) => state.context.remainingTime);
+export const useIsPlaying = () => useSelector(timerStore, (state) => state.context.isPlaying);
+export const useRemainingTime = () => useSelector(timerStore, (state) => state.context.remainingTime);
