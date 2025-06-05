@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Mode, modeStore, useMode } from '../hooks/mode-store';
+import { settingsStore, useRestTime, useStartWithRest, useWorkTime } from '../hooks/settings-store';
 import { timerStore, useIsPlaying, useRemainingTime } from '../hooks/timer-store';
 import { useWakeLock } from '../hooks/use-wake-lock';
 import { SettingControl } from './SettingControl';
@@ -12,34 +13,18 @@ const sound = new Audio('https://cdn.freesound.org/previews/366/366102_6687700-l
 // https://cdn.freesound.org/previews/187/187306_2094213-lq.mp3 // train door
 
 export function IntervalTimer() {
-  const [storageKeyWorkTime, storageKeyRestTime, storageKeyPlaySound, storageKeyStartWithRest] = [
-    'workTime',
-    'restTime',
-    'playSound',
-    'startWithRest',
-  ];
+  const workTime = useWorkTime();
+  const restTime = useRestTime();
+  const startWithRest = useStartWithRest();
+  const setWorkTime = (value: number) => settingsStore.send({type: 'set', workTime: value});
+  const setRestTime = (value: number) => settingsStore.send({type: 'set', restTime: value});
+  const setStartWithRest = (startWithRest: boolean) => settingsStore.send({type: 'set', startWithRest});
 
-  const [workTime, setWorkTime] = useState(parseInt(localStorage.getItem(storageKeyWorkTime) || '25'));
-  useEffect(() => {
-    localStorage.setItem(storageKeyWorkTime, String(workTime));
-  }, [workTime]);
-
-  const [restTime, setRestTime] = useState(parseInt(localStorage.getItem(storageKeyRestTime) || '5'));
-  useEffect(() => {
-    localStorage.setItem(storageKeyRestTime, String(restTime));
-  }, [restTime]);
-
+  const storageKeyPlaySound = 'playSound';
   const [playSound, setPlaySound] = useState((localStorage.getItem(storageKeyPlaySound) || 'true') == 'true');
   useEffect(() => {
     localStorage.setItem(storageKeyPlaySound, String(playSound));
   }, [playSound]);
-
-  const [startWithRest, setStartWithRest] = useState(
-    (localStorage.getItem(storageKeyStartWithRest) || 'true') == 'true'
-  );
-  useEffect(() => {
-    localStorage.setItem(storageKeyStartWithRest, String(startWithRest));
-  }, [startWithRest]);
 
   const initialMode = startWithRest ? 'rest' : ('work' as Mode);
   const getModeTime: Record<Mode, () => number> = {
