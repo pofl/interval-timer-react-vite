@@ -1,7 +1,11 @@
 import { createStore } from '@xstate/store';
 import { useSelector } from '@xstate/store/react';
 
-const [storageKeyWorkTime, storageKeyRestTime, storageKeyStartWithRest] = ['workTime', 'restTime', 'startWithRest'];
+export const [storageKeyWorkTime, storageKeyRestTime, storageKeyStartWithRest] = [
+  'workTime',
+  'restTime',
+  'startWithRest',
+];
 export const settingsStore = createStore({
   context: {
     workTime: parseInt(localStorage.getItem(storageKeyWorkTime) || '25'),

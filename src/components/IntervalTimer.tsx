@@ -7,64 +7,37 @@ import {
   useStartWithRest,
   useWorkTime,
 } from '../hooks/settings-store';
-import { Mode, timerStore, useIsPlaying, useMode, useRemainingTime } from '../hooks/timer-store';
+import {
+  getModeTime,
+  setPlaySound,
+  timerStore,
+  useAppliedRestTime,
+  useAppliedWorkTime,
+  useIsPlaying,
+  useMode,
+  usePlaySound,
+  useRemainingTime,
+} from '../hooks/timer-store';
 import { useWakeLock } from '../hooks/use-wake-lock';
 import { SettingControl } from './SettingControl';
-
-// const sound = new Audio('https://cdn.freesound.org/previews/351/351550_3450800-lq.mp3'); // ding
-const sound = new Audio('https://cdn.freesound.org/previews/366/366102_6687700-lq.mp3'); // gentle clong
-// https://cdn.freesound.org/previews/446/446114_758593-lq.mp3 // jingly clong
-// https://cdn.freesound.org/previews/394/394795_6887623-lq.mp3 // glass ding
-// https://cdn.freesound.org/previews/615/615949_13086280-lq.mp3 // cash ding
-// https://cdn.freesound.org/previews/187/187306_2094213-lq.mp3 // train door
 
 export function IntervalTimer() {
   const workTime = useWorkTime();
   const restTime = useRestTime();
+  const appliedWorkTime = useAppliedWorkTime();
+  const appliedRestTime = useAppliedRestTime();
   const startWithRest = useStartWithRest();
-
-  const storageKeyPlaySound = 'playSound';
-  const [playSound, setPlaySound] = useState((localStorage.getItem(storageKeyPlaySound) || 'true') == 'true');
-  useEffect(() => {
-    localStorage.setItem(storageKeyPlaySound, String(playSound));
-  }, [playSound]);
-
-  const initialMode = startWithRest ? 'rest' : ('work' as Mode);
-  const getModeTime: Record<Mode, () => number> = {
-    work: () => workTime,
-    rest: () => restTime,
-  };
+  const playSound = usePlaySound();
   const mode = useMode();
-  useEffect(() => {
-    const newMaxTime = getModeTime[mode]();
-    setMaxTime(newMaxTime);
-    timerStore.send({type: 'setRemainingTime', time: newMaxTime});
-  }, [mode]);
-
   const isPlaying = useIsPlaying();
   const remainingTime = useRemainingTime();
 
-  const [maxTime, setMaxTime] = useState(getModeTime[mode]());
+  const initialMode = startWithRest ? 'rest' : 'work';
 
-  useEffect(() => {
-    if (!isPlaying) {
-      return;
-    }
-    if (remainingTime <= 0) {
-      if (playSound) {
-        sound.play();
-      }
-      const interval = setInterval(() => timerStore.send({type: 'switch'}), 500);
-      return () => clearInterval(interval);
-    } else {
-      const interval = setInterval(() => timerStore.send({type: 'tick'}), 1000);
-      return () => clearInterval(interval);
-    }
-  }, [remainingTime, isPlaying]);
+  const maxTime = getModeTime({workTime: appliedWorkTime, restTime: appliedRestTime}, mode);
 
   const reset = () => {
-    timerStore.send({type: 'setIsPlaying', isPlaying: false});
-    timerStore.send({type: 'setMode', mode: initialMode});
+    timerStore.send({type: 'reset', mode: initialMode, workTime, restTime});
   };
 
   const [wakeLockError, setError] = useState<string | null>(null);
@@ -123,11 +96,11 @@ export function IntervalTimer() {
         <tbody>
           <tr>
             <td className="px-2">Work Time</td>
-            <td className="px-2">{workTime}</td>
+            <td className="px-2">{appliedWorkTime}</td>
           </tr>
           <tr>
             <td className="px-2">Rest Time</td>
-            <td className="px-2">{restTime}</td>
+            <td className="px-2">{appliedRestTime}</td>
           </tr>
           <tr>
             <td className="px-2">Mode</td>
