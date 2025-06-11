@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Mode, modeStore, useMode } from '../hooks/mode-store';
 import {
   setRestTime,
   setStartWithRest,
@@ -8,7 +7,7 @@ import {
   useStartWithRest,
   useWorkTime,
 } from '../hooks/settings-store';
-import { timerStore, useIsPlaying, useRemainingTime } from '../hooks/timer-store';
+import { Mode, timerStore, useIsPlaying, useMode, useRemainingTime } from '../hooks/timer-store';
 import { useWakeLock } from '../hooks/use-wake-lock';
 import { SettingControl } from './SettingControl';
 
@@ -55,7 +54,7 @@ export function IntervalTimer() {
       if (playSound) {
         sound.play();
       }
-      const interval = setInterval(() => modeStore.send({type: 'switch'}), 500);
+      const interval = setInterval(() => timerStore.send({type: 'switch'}), 500);
       return () => clearInterval(interval);
     } else {
       const interval = setInterval(() => timerStore.send({type: 'tick'}), 1000);
@@ -65,7 +64,7 @@ export function IntervalTimer() {
 
   const reset = () => {
     timerStore.send({type: 'setIsPlaying', isPlaying: false});
-    modeStore.send({type: 'setMode', mode: initialMode});
+    timerStore.send({type: 'setMode', mode: initialMode});
   };
 
   const [wakeLockError, setError] = useState<string | null>(null);
