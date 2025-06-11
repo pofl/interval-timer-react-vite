@@ -1,6 +1,13 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Mode, modeStore, useMode } from '../hooks/mode-store';
-import { settingsStore, useRestTime, useStartWithRest, useWorkTime } from '../hooks/settings-store';
+import {
+  setRestTime,
+  setStartWithRest,
+  setWorkTime,
+  useRestTime,
+  useStartWithRest,
+  useWorkTime,
+} from '../hooks/settings-store';
 import { timerStore, useIsPlaying, useRemainingTime } from '../hooks/timer-store';
 import { useWakeLock } from '../hooks/use-wake-lock';
 import { SettingControl } from './SettingControl';
@@ -16,9 +23,6 @@ export function IntervalTimer() {
   const workTime = useWorkTime();
   const restTime = useRestTime();
   const startWithRest = useStartWithRest();
-  const setWorkTime = (value: number) => settingsStore.send({type: 'set', workTime: value});
-  const setRestTime = (value: number) => settingsStore.send({type: 'set', restTime: value});
-  const setStartWithRest = (startWithRest: boolean) => settingsStore.send({type: 'set', startWithRest});
 
   const storageKeyPlaySound = 'playSound';
   const [playSound, setPlaySound] = useState((localStorage.getItem(storageKeyPlaySound) || 'true') == 'true');

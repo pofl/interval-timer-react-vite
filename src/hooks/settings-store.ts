@@ -16,10 +16,12 @@ export const settingsStore = createStore({
   },
 });
 
-
 export const useWorkTime = () => useSelector(settingsStore, (state) => state.context.workTime);
 export const useRestTime = () => useSelector(settingsStore, (state) => state.context.restTime);
 export const useStartWithRest = () => useSelector(settingsStore, (state) => state.context.startWithRest);
+export const setWorkTime = (value: number) => settingsStore.send({type: 'set', workTime: value});
+export const setRestTime = (value: number) => settingsStore.send({type: 'set', restTime: value});
+export const setStartWithRest = (startWithRest: boolean) => settingsStore.send({type: 'set', startWithRest});
 
 export function initSettingsStore() {
   console.log('Initializing settings store');
