@@ -92,7 +92,7 @@ export function IntervalTimer() {
 
       <hr className="border-sand-500 my-3 w-[85%] border" />
 
-      <table className="mb-2 border-collapse">
+      <table className="mb-2 table-auto border-collapse">
         <tbody>
           <tr>
             <td className="px-2">Work Time</td>
@@ -108,7 +108,7 @@ export function IntervalTimer() {
           </tr>
           <tr>
             <td className="px-2">Remaining</td>
-            <td className="px-2">
+            <td className="min-w-[8ex] px-2">
               <b>
                 {remainingTime} / {maxTime}
               </b>
