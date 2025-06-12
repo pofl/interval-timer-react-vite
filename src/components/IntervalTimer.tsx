@@ -59,7 +59,7 @@ export function IntervalTimer() {
     return !wakeLockReleased;
   }, [wakeLockReleased]);
 
-  const handlewakeLockToggle = async () => {
+  const handleWakeLockToggle = async () => {
     if (wakeLockLocked) {
       await releaseWakeLock();
     } else {
@@ -125,7 +125,7 @@ export function IntervalTimer() {
             'Screen Lock Prevention Not Supported'
           ) : (
             <label className="space-x-1">
-              <input type="checkbox" checked={wakeLockLocked} onChange={handlewakeLockToggle} />
+              <input type="checkbox" checked={wakeLockLocked} onChange={handleWakeLockToggle} />
               <span>Keep Screen On</span>
             </label>
           )}
