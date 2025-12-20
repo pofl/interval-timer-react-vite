@@ -104,18 +104,15 @@ export function IntervalTimer() {
           </tr>
           <tr>
             <td className="px-2">Mode</td>
-            <td className="px-2">{mode}</td>
-          </tr>
-          <tr>
-            <td className="px-2">Remaining</td>
-            <td className="min-w-[8ex] px-2">
-              <b>
-                {remainingTime} / {maxTime}
-              </b>
-            </td>
+            <td className="min-w-[8ex] px-2">{mode}</td>
           </tr>
         </tbody>
       </table>
+
+      <div className="flex items-center gap-2">
+        <progress value={remainingTime} max={maxTime}></progress>
+        <span>{remainingTime}</span>
+      </div>
 
       <div>
         <div>
