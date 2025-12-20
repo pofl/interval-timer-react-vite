@@ -109,8 +109,12 @@ export function IntervalTimer() {
         </tbody>
       </table>
 
-      <div className="flex items-center gap-2">
-        <progress value={remainingTime} max={maxTime}></progress>
+      <div className="flex items-center gap-4">
+        <progress
+          className="[&::-moz-progress-bar]:bg-stone-500 [&::-webkit-progress-bar]:rounded-lg [&::-webkit-progress-bar]:bg-stone-300 [&::-webkit-progress-value]:rounded-lg [&::-webkit-progress-value]:bg-stone-500"
+          value={remainingTime}
+          max={maxTime}
+        ></progress>
         <span>{remainingTime}</span>
       </div>
 
