@@ -19,6 +19,7 @@ import {
   useRemainingTime,
 } from '../hooks/timer-store';
 import { useWakeLock } from '../hooks/use-wake-lock';
+import { Progress } from './Progress';
 import { SettingControl } from './SettingControl';
 
 export function IntervalTimer() {
@@ -110,12 +111,7 @@ export function IntervalTimer() {
       </table>
 
       <div className="flex items-center gap-4">
-        <div className="bg-stone-300 relative h-6 w-64 overflow-hidden rounded-lg">
-          <div
-            className="bg-stone-500 h-full transition-all duration-300 ease-linear"
-            style={{ width: `${maxTime > 0 ? (remainingTime / maxTime) * 100 : 0}%` }}
-          ></div>
-        </div>
+        <Progress value={remainingTime} max={maxTime} className="w-64" />
         <span className="tabular-nums">{remainingTime}</span>
       </div>
 
