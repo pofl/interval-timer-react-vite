@@ -110,12 +110,13 @@ export function IntervalTimer() {
       </table>
 
       <div className="flex items-center gap-4">
-        <progress
-          className="[&::-moz-progress-bar]:bg-stone-500 [&::-webkit-progress-bar]:rounded-lg [&::-webkit-progress-bar]:bg-stone-300 [&::-webkit-progress-value]:rounded-lg [&::-webkit-progress-value]:bg-stone-500"
-          value={remainingTime}
-          max={maxTime}
-        ></progress>
-        <span>{remainingTime}</span>
+        <div className="bg-stone-300 relative h-6 w-64 overflow-hidden rounded-lg">
+          <div
+            className="bg-stone-500 h-full transition-all duration-300 ease-linear"
+            style={{ width: `${maxTime > 0 ? (remainingTime / maxTime) * 100 : 0}%` }}
+          ></div>
+        </div>
+        <span className="tabular-nums">{remainingTime}</span>
       </div>
 
       <div>
