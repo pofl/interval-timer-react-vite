@@ -75,7 +75,7 @@ export function IntervalTimer() {
   }, [isPlaying]);
 
   return (
-    <div className="flex flex-col items-center p-1">
+    <div className="flex flex-col items-center p-1 tabular-nums">
       <h1 className="mb-4 text-2xl font-bold">Interval Timer</h1>
       <SettingControl value={workTime} label="Work Time" onChange={(value: number) => setWorkTime(value)} />
       <SettingControl value={restTime} label="Rest Time" onChange={(value: number) => setRestTime(value)} />
