@@ -1,3 +1,4 @@
+@import url('https://fonts.bunny.net/css?family=press-start-2p:400');
 @import "tailwindcss";
 
 @theme {
@@ -12,4 +13,8 @@ body {
 body {
   font-family: sans-serif;
   font-size: large;
+}
+
+.font-press-start-2p {
+  font-family: 'Press Start 2P', cursive;
 }
