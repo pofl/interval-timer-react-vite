@@ -75,18 +75,44 @@ export function IntervalTimer() {
   }, [isPlaying]);
 
   return (
-    <div className="flex flex-col items-center p-1 tabular-nums">
+    <div className="flex flex-col items-center gap-2 p-1 tabular-nums">
       <SettingControl value={workTime} label="Work Time" onChange={(value: number) => setWorkTime(value)} />
       <SettingControl value={restTime} label="Rest Time" onChange={(value: number) => setRestTime(value)} />
       <div>
-        <label className="space-x-1">
-          <input type="checkbox" checked={startWithRest} onChange={(e) => setStartWithRest(e.target.checked)} />
-          <span>Start with Rest</span>
-        </label>
+        <div>
+          <label className="space-x-1">
+            <input type="checkbox" checked={startWithRest} onChange={(e) => setStartWithRest(e.target.checked)} />
+            <span>Start with Rest</span>
+          </label>
+        </div>
+        <div>
+          {wakeLockError ? (
+            <span>Screen Lock Prevention Error: {wakeLockError}</span>
+          ) : !wakeLockSupported ? (
+            'Screen Lock Prevention Not Supported'
+          ) : (
+            <label className="space-x-1">
+              <input type="checkbox" checked={wakeLockLocked} onChange={handleWakeLockToggle} />
+              <span>Keep Screen On</span>
+            </label>
+          )}
+        </div>
+        <div>
+          <label className="space-x-1">
+            <input type="checkbox" checked={playSound} onChange={(e) => setPlaySound(e.target.checked)} />
+            <span>Play sound</span>
+          </label>
+        </div>
       </div>
       <div>
         <button className="bg-sand-500 m-1 rounded-sm px-4 py-1.5 text-gray-950" onClick={reset}>
           Reset
+        </button>
+        <button
+          className="bg-sand-500 m-1 rounded-sm px-4 py-1.5 text-gray-950"
+          onClick={() => timerStore.send({type: 'toggle'})}
+        >
+          {!isPlaying && remainingTime > 0 ? 'Start' : 'Pause'}
         </button>
       </div>
 
@@ -114,31 +140,6 @@ export function IntervalTimer() {
         <span className="tabular-nums">{remainingTime}</span>
       </div>
 
-      <div>
-        <div>
-          {wakeLockError ? (
-            <span>Screen Lock Prevention Error: {wakeLockError}</span>
-          ) : !wakeLockSupported ? (
-            'Screen Lock Prevention Not Supported'
-          ) : (
-            <label className="space-x-1">
-              <input type="checkbox" checked={wakeLockLocked} onChange={handleWakeLockToggle} />
-              <span>Keep Screen On</span>
-            </label>
-          )}
-        </div>
-        <div>
-          <label className="space-x-1">
-            <input type="checkbox" checked={playSound} onChange={(e) => setPlaySound(e.target.checked)} />
-            <span>Play sound</span>
-          </label>
-        </div>
-      </div>
-      <div>
-        <button className="bg-sand-500 m-1 rounded-sm px-4 py-1.5 text-gray-950" onClick={() => timerStore.send({type: 'toggle'})}>
-          {!isPlaying && remainingTime > 0 ? 'Start' : 'Pause'}
-        </button>
-      </div>
     </div>
   );
 }
