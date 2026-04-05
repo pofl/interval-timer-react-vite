@@ -75,8 +75,8 @@ export function IntervalTimer() {
   }, [isPlaying]);
 
   return (
-    <div className="flex flex-col items-center p-1 tabular-nums">
-      <h1 className="mb-4 text-2xl font-bold">Interval Timer</h1>
+    <div className="flex flex-col items-center p-1 tabular-nums text-gray-850">
+      <h1 className="mb-10 text-6xl font-bold text-gray-700">Interval Timer</h1>
       <SettingControl value={workTime} label="Work Time" onChange={(value: number) => setWorkTime(value)} />
       <SettingControl value={restTime} label="Rest Time" onChange={(value: number) => setRestTime(value)} />
       <div>
@@ -86,7 +86,7 @@ export function IntervalTimer() {
         </label>
       </div>
       <div>
-        <button className="bg-sand-500 m-1 rounded-sm px-4 py-1.5" onClick={reset}>
+        <button className="bg-sand-500 m-1 rounded-sm px-4 py-1.5 text-gray-950" onClick={reset}>
           Reset
         </button>
       </div>
@@ -136,7 +136,7 @@ export function IntervalTimer() {
         </div>
       </div>
       <div>
-        <button className="bg-sand-500 m-1 rounded-sm px-4 py-1.5" onClick={() => timerStore.send({type: 'toggle'})}>
+        <button className="bg-sand-500 m-1 rounded-sm px-4 py-1.5 text-gray-950" onClick={() => timerStore.send({type: 'toggle'})}>
           {!isPlaying && remainingTime > 0 ? 'Start' : 'Pause'}
         </button>
       </div>

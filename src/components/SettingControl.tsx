@@ -8,10 +8,10 @@ export function SettingControl({value, onChange, label}: SettingControlProps) {
   return (
     <div className="m-1 flex flex-wrap items-center gap-1">
       <span className="w-25">{label}</span>
-      <button className="bg-sand-500 rounded-sm px-2 py-1.5 text-xs" onClick={() => onChange(value - 5)}>
+      <button className="bg-sand-500 rounded-sm px-2 py-1.5 text-xs text-gray-950" onClick={() => onChange(value - 5)}>
         -5
       </button>
-      <button className="bg-sand-500 rounded-sm px-2 py-1.5 text-xs" onClick={() => onChange(value - 1)}>
+      <button className="bg-sand-500 rounded-sm px-2 py-1.5 text-xs text-gray-950" onClick={() => onChange(value - 1)}>
         -1
       </button>
       <input
@@ -20,10 +20,10 @@ export function SettingControl({value, onChange, label}: SettingControlProps) {
         value={value}
         onChange={(e) => onChange(parseInt(e.target.value))}
       />
-      <button className="bg-sand-500 rounded-sm px-2 py-1.5 text-xs" onClick={() => onChange(value + 1)}>
+      <button className="bg-sand-500 rounded-sm px-2 py-1.5 text-xs text-gray-950" onClick={() => onChange(value + 1)}>
         +1
       </button>
-      <button className="bg-sand-500 rounded-sm px-2 py-1.5 text-xs" onClick={() => onChange(value + 5)}>
+      <button className="bg-sand-500 rounded-sm px-2 py-1.5 text-xs text-gray-950" onClick={() => onChange(value + 5)}>
         +5
       </button>
     </div>
