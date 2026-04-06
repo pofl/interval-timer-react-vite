@@ -1,21 +1,25 @@
 @import url('https://fonts.bunny.net/css?family=orbitron:400');
 @import url('https://fonts.bunny.net/css?family=press-start-2p:400');
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
   --color-sand-500: #ece5d2;
+  --font-body: 'Orbitron', sans-serif;
+  --font-display: 'Press Start 2P', cursive;
 }
 
-html,
-body {
-  height: 100%;
-}
+@layer base {
+  html,
+  body {
+    height: 100%;
+  }
 
-body {
-  font-family: 'Orbitron', sans-serif;
-  font-size: medium;
+  body {
+    font-family: var(--font-body);
+    font-size: medium;
+  }
 }
 
 .font-press-start-2p {
-  font-family: 'Press Start 2P', cursive;
+  font-family: var(--font-display);
 }

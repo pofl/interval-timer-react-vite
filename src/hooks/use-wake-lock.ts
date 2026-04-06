@@ -4,6 +4,10 @@ import * as React from 'react';
 
 const warn = (content: string) => console.warn('[react-screen-wake-lock]: ' + content);
 
+function toError(error: unknown) {
+  return error instanceof Error ? error : new Error(String(error));
+}
+
 export interface WakeLockOptions {
   onError?: (error: Error) => void;
   onRequest?: () => void;
@@ -39,14 +43,14 @@ export const useWakeLock = ({
         wakeLock.current.onrelease = (e: Event) => {
           // Default to `true` - `released` API is experimental: https://caniuse.com/mdn-api_wakelocksentinel_released
           setReleased((wakeLock.current && wakeLock.current.released) || true);
-          onRelease && onRelease(e);
+          onRelease?.(e);
           wakeLock.current = null;
         };
 
-        onRequest && onRequest();
+        onRequest?.();
         setReleased((wakeLock.current && wakeLock.current.released) || false);
-      } catch (error: any) {
-        onError && onError(error);
+      } catch (error: unknown) {
+        onError?.(toError(error));
       }
     },
     [isSupported, onRequest, onError, onRelease]
@@ -61,8 +65,9 @@ export const useWakeLock = ({
     if (isWakeLockUndefined) {
       return warn('Calling `release` before `request` has no effect.');
     }
-
-    wakeLock.current && (await wakeLock.current.release());
+    if (wakeLock.current) {
+      await wakeLock.current.release();
+    }
   }, [isSupported]);
 
   React.useEffect(() => {
@@ -71,8 +76,8 @@ export const useWakeLock = ({
         if (wakeLock.current && document.visibilityState === 'visible') {
           try {
             wakeLock.current = await navigator.wakeLock.request('screen');
-          } catch (error: any) {
-            onError?.(error);
+          } catch (error: unknown) {
+            onError?.(toError(error));
           }
         }
       };

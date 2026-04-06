@@ -1,15 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
-import {
-  setRestTime,
-  setStartWithRest,
-  setWorkTime,
-  useRestTime,
-  useStartWithRest,
-  useWorkTime,
-} from '../hooks/settings-store';
+import {useEffect, useState} from 'react';
+import {setRestTime, setWorkTime, useRestTime, useStartWithRest, useWorkTime} from '../hooks/settings-store';
 import {
   getModeTime,
-  setPlaySound,
   timerStore,
   useAppliedRestTime,
   useAppliedWorkTime,
@@ -18,9 +10,12 @@ import {
   usePlaySound,
   useRemainingTime,
 } from '../hooks/timer-store';
-import { useWakeLock } from '../hooks/use-wake-lock';
-import { Progress } from './Progress';
-import { SettingControl } from './SettingControl';
+import {useWakeLock} from '../hooks/use-wake-lock';
+import {SettingControl} from './SettingControl';
+import {TimerActions} from './interval-timer/TimerActions';
+import {TimerOptions} from './interval-timer/TimerOptions';
+import {TimerProgressDisplay} from './interval-timer/TimerProgressDisplay';
+import {TimerSummary} from './interval-timer/TimerSummary';
 
 export function IntervalTimer() {
   const workTime = useWorkTime();
@@ -55,10 +50,7 @@ export function IntervalTimer() {
     reacquireOnPageVisible: true,
   });
 
-  const wakeLockLocked = useMemo(() => {
-    if (wakeLockReleased === undefined) return false;
-    return !wakeLockReleased;
-  }, [wakeLockReleased]);
+  const wakeLockLocked = wakeLockReleased === undefined ? false : !wakeLockReleased;
 
   const handleWakeLockToggle = async () => {
     if (wakeLockLocked) {
@@ -70,76 +62,33 @@ export function IntervalTimer() {
 
   useEffect(() => {
     if (isPlaying) {
-      requestWakeLock();
+      void requestWakeLock();
     }
-  }, [isPlaying]);
+  }, [isPlaying, requestWakeLock]);
 
   return (
     <div className="flex flex-col items-center gap-2 p-1 tabular-nums">
       <SettingControl value={workTime} label="Work Time" onChange={(value: number) => setWorkTime(value)} />
       <SettingControl value={restTime} label="Rest Time" onChange={(value: number) => setRestTime(value)} />
-      <div>
-        <div>
-          <label className="space-x-1">
-            <input type="checkbox" checked={startWithRest} onChange={(e) => setStartWithRest(e.target.checked)} />
-            <span>Start with Rest</span>
-          </label>
-        </div>
-        <div>
-          {wakeLockError ? (
-            <span>Screen Lock Prevention Error: {wakeLockError}</span>
-          ) : !wakeLockSupported ? (
-            'Screen Lock Prevention Not Supported'
-          ) : (
-            <label className="space-x-1">
-              <input type="checkbox" checked={wakeLockLocked} onChange={handleWakeLockToggle} />
-              <span>Keep Screen On</span>
-            </label>
-          )}
-        </div>
-        <div>
-          <label className="space-x-1">
-            <input type="checkbox" checked={playSound} onChange={(e) => setPlaySound(e.target.checked)} />
-            <span>Play sound</span>
-          </label>
-        </div>
-      </div>
-      <div>
-        <button className="bg-sand-500 m-1 rounded-sm px-4 py-1.5 text-gray-950" onClick={reset}>
-          Reset
-        </button>
-        <button
-          className="bg-sand-500 m-1 rounded-sm px-4 py-1.5 text-gray-950"
-          onClick={() => timerStore.send({type: 'toggle'})}
-        >
-          {!isPlaying && remainingTime > 0 ? 'Start' : 'Pause'}
-        </button>
-      </div>
+      <TimerOptions
+        playSound={playSound}
+        startWithRest={startWithRest}
+        wakeLockError={wakeLockError}
+        wakeLockLocked={wakeLockLocked}
+        wakeLockSupported={wakeLockSupported}
+        onWakeLockToggle={handleWakeLockToggle}
+      />
+      <TimerActions
+        isPlaying={isPlaying}
+        remainingTime={remainingTime}
+        onReset={reset}
+        onToggle={() => timerStore.send({type: 'toggle'})}
+      />
 
       <hr className="border-sand-500 my-3 w-[85%] border" />
 
-      <table className="mb-2 table-auto border-collapse">
-        <tbody>
-          <tr>
-            <td className="px-2">Work Time</td>
-            <td className="px-2">{appliedWorkTime}</td>
-          </tr>
-          <tr>
-            <td className="px-2">Rest Time</td>
-            <td className="px-2">{appliedRestTime}</td>
-          </tr>
-          <tr>
-            <td className="px-2">Mode</td>
-            <td className="min-w-[8ex] px-2">{mode}</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div className="flex items-center gap-4">
-        <Progress value={remainingTime} max={maxTime} className="w-64" />
-        <span className="tabular-nums">{remainingTime}</span>
-      </div>
-
+      <TimerSummary appliedRestTime={appliedRestTime} appliedWorkTime={appliedWorkTime} mode={mode} />
+      <TimerProgressDisplay maxTime={maxTime} remainingTime={remainingTime} />
     </div>
   );
 }
