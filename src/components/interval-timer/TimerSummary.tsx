@@ -8,19 +8,23 @@ interface TimerSummaryProps {
 
 export function TimerSummary({appliedRestTime, appliedWorkTime, mode}: TimerSummaryProps) {
   return (
-    <table className="mb-4 w-full table-auto border-collapse text-sm bg-black/40 border border-neon-purple/30 rounded-lg overflow-hidden shadow-[0_0_15px_rgba(176,38,255,0.2)]">
+    <table className="border-neon-purple/30 mb-2 w-full table-auto border-collapse overflow-hidden rounded-lg border bg-black/40 text-xs shadow-[0_0_15px_rgba(176,38,255,0.2)] sm:mb-4 sm:text-sm">
       <tbody>
-        <tr className="border-b border-neon-purple/30">
-          <td className="px-4 py-3 text-neon-blue uppercase tracking-widest font-bold">Work Time</td>
-          <td className="px-4 py-3 text-neon-pink font-bold text-right text-lg">{appliedWorkTime}</td>
+        <tr className="border-neon-purple/30 border-b">
+          <td className="text-neon-blue px-2 py-2 font-bold tracking-widest uppercase sm:px-4 sm:py-3">Work Time</td>
+          <td className="text-neon-pink px-2 py-2 text-right text-base font-bold sm:px-4 sm:py-3 sm:text-lg">
+            {appliedWorkTime}
+          </td>
         </tr>
-        <tr className="border-b border-neon-purple/30">
-          <td className="px-4 py-3 text-neon-blue uppercase tracking-widest font-bold">Rest Time</td>
-          <td className="px-4 py-3 text-neon-pink font-bold text-right text-lg">{appliedRestTime}</td>
+        <tr className="border-neon-purple/30 border-b">
+          <td className="text-neon-blue px-2 py-2 font-bold tracking-widest uppercase sm:px-4 sm:py-3">Rest Time</td>
+          <td className="text-neon-pink px-2 py-2 text-right text-base font-bold sm:px-4 sm:py-3 sm:text-lg">
+            {appliedRestTime}
+          </td>
         </tr>
         <tr>
-          <td className="px-4 py-3 text-neon-blue uppercase tracking-widest font-bold">Mode</td>
-          <td className="min-w-[8ex] px-4 py-3 text-neon-green font-bold text-right text-lg uppercase tracking-widest animate-pulse shadow-neon-green">
+          <td className="text-neon-blue px-2 py-2 font-bold tracking-widest uppercase sm:px-4 sm:py-3">Mode</td>
+          <td className="text-neon-green shadow-neon-green min-w-[8ex] animate-pulse px-2 py-2 text-right text-base font-bold tracking-widest uppercase sm:px-4 sm:py-3 sm:text-lg">
             {mode}
           </td>
         </tr>

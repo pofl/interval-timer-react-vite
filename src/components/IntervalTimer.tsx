@@ -67,7 +67,7 @@ export function IntervalTimer() {
   }, [isPlaying, requestWakeLock]);
 
   return (
-    <div className="bg-dark-bg border-neon-purple/80 z-10 flex w-full max-w-lg flex-col items-center gap-4 rounded-2xl border-2 p-6 tabular-nums shadow-[0_0_20px_rgba(176,38,255,0.6)] transition-shadow">
+    <div className="bg-dark-bg border-neon-purple/80 z-10 flex w-full max-w-lg flex-col items-center gap-2 rounded-xl border p-4 tabular-nums shadow-[0_0_20px_rgba(176,38,255,0.6)] transition-shadow sm:gap-4 sm:rounded-2xl sm:border-2 sm:p-6">
       <SettingControl value={workTime} label="Work Time" onChange={(value: number) => setWorkTime(value)} />
       <SettingControl value={restTime} label="Rest Time" onChange={(value: number) => setRestTime(value)} />
       <TimerOptions

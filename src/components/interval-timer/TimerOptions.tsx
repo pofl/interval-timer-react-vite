@@ -20,7 +20,7 @@ export function TimerOptions({
   onWakeLockToggle,
 }: TimerOptionsProps) {
   return (
-    <div className="flex flex-col gap-2 w-full my-2 bg-black/40 p-3 rounded-lg border border-neon-purple/30 shadow-[0_0_10px_rgba(176,38,255,0.2)]">
+    <div className="border-neon-purple/30 my-1 flex w-full flex-col gap-1 rounded-lg border bg-black/40 p-2 shadow-[0_0_10px_rgba(176,38,255,0.2)] sm:my-2 sm:gap-2 sm:p-3">
       <div>
         <CheckboxField
           checked={startWithRest}
@@ -30,9 +30,11 @@ export function TimerOptions({
       </div>
       <div>
         {wakeLockError ? (
-          <span className="text-neon-pink text-xs uppercase shadow-neon-pink">Screen Lock Prevention Error: {wakeLockError}</span>
+          <span className="text-neon-pink shadow-neon-pink text-xs uppercase">
+            Screen Lock Prevention Error: {wakeLockError}
+          </span>
         ) : !wakeLockSupported ? (
-          <span className="text-gray-500 text-xs uppercase">Screen Lock Prevention Not Supported</span>
+          <span className="text-xs text-gray-500 uppercase">Screen Lock Prevention Not Supported</span>
         ) : (
           <CheckboxField
             checked={wakeLockLocked}
