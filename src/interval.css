@@ -1,22 +1,32 @@
-@import url('https://fonts.bunny.net/css?family=orbitron:400');
+@import url('https://fonts.bunny.net/css?family=orbitron:400,700');
 @import url('https://fonts.bunny.net/css?family=press-start-2p:400');
 @import 'tailwindcss';
 
 @theme {
-  --color-sand-500: #ece5d2;
   --font-body: 'Orbitron', sans-serif;
   --font-display: 'Press Start 2P', cursive;
+  
+  --color-neon-pink: #ff00ff;
+  --color-neon-blue: #00ffff;
+  --color-neon-purple: #b026ff;
+  --color-neon-green: #39ff14;
+  
+  --color-dark-bg: #05000a;
+  --color-panel-bg: rgba(20, 0, 40, 0.4);
 }
 
 @layer base {
   html,
-  body {
-    height: 100%;
+  body,
+  #root {
+    @apply h-screen w-screen overflow-hidden m-0 p-0;
   }
 
   body {
     font-family: var(--font-body);
     font-size: medium;
+    background: radial-gradient(circle at center, #1b0033 0%, var(--color-dark-bg) 100%);
+    @apply text-neon-blue;
   }
 }
 

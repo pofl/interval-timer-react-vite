@@ -67,7 +67,7 @@ export function IntervalTimer() {
   }, [isPlaying, requestWakeLock]);
 
   return (
-    <div className="flex flex-col items-center gap-2 p-1 tabular-nums">
+    <div className="flex flex-col items-center gap-4 p-6 tabular-nums bg-panel-bg/40 border-2 border-neon-purple/50 rounded-2xl shadow-[0_0_20px_rgba(176,38,255,0.4)] backdrop-blur-xl w-full max-w-lg z-10 transition-shadow">
       <SettingControl value={workTime} label="Work Time" onChange={(value: number) => setWorkTime(value)} />
       <SettingControl value={restTime} label="Rest Time" onChange={(value: number) => setRestTime(value)} />
       <TimerOptions
@@ -85,7 +85,7 @@ export function IntervalTimer() {
         onToggle={() => timerStore.send({type: 'toggle'})}
       />
 
-      <hr className="border-sand-500 my-3 w-[85%] border" />
+      <hr className="border-neon-purple/50 my-2 w-full border shadow-[0_0_8px_rgba(176,38,255,0.6)]" />
 
       <TimerSummary appliedRestTime={appliedRestTime} appliedWorkTime={appliedWorkTime} mode={mode} />
       <TimerProgressDisplay maxTime={maxTime} remainingTime={remainingTime} />
