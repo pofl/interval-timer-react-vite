@@ -67,17 +67,15 @@ export function IntervalTimer() {
   }, [isPlaying, requestWakeLock]);
 
   return (
-    <div className="bg-dark-bg border-neon-purple/80 z-10 flex w-full max-w-lg flex-col items-center gap-2 rounded-xl border p-4 tabular-nums shadow-[0_0_20px_rgba(176,38,255,0.6)] transition-shadow sm:gap-4 sm:rounded-2xl sm:border-2 sm:p-6">
-      <SettingControl value={workTime} label="Work Time" onChange={(value: number) => setWorkTime(value)} />
-      <SettingControl value={restTime} label="Rest Time" onChange={(value: number) => setRestTime(value)} />
-      <TimerOptions
-        playSound={playSound}
-        startWithRest={startWithRest}
-        wakeLockError={wakeLockError}
-        wakeLockLocked={wakeLockLocked}
-        wakeLockSupported={wakeLockSupported}
-        onWakeLockToggle={handleWakeLockToggle}
-      />
+    <div className="flex w-full flex-col gap-3 tabular-nums">
+      <section className="border-4 border-ink bg-coral p-3 shadow-[6px_6px_0_#171717] sm:p-4">
+        <div className="mb-3 flex items-center justify-between">
+          <span className="font-display text-sm uppercase">{mode} block</span>
+          <span className="bg-ink px-2 py-1 text-[10px] font-bold uppercase text-paper">{isPlaying ? 'In Progress' : 'Ready'}</span>
+        </div>
+        <TimerProgressDisplay maxTime={maxTime} remainingTime={remainingTime} mode={mode} />
+      </section>
+
       <TimerActions
         isPlaying={isPlaying}
         remainingTime={remainingTime}
@@ -85,10 +83,24 @@ export function IntervalTimer() {
         onToggle={() => timerStore.send({type: 'toggle'})}
       />
 
-      <hr className="border-neon-purple/50 my-2 w-full border shadow-[0_0_8px_rgba(176,38,255,0.6)]" />
+      <div className={isPlaying ? 'hidden' : 'grid gap-3'}>
+        <section className="grid gap-2">
+          <SettingControl value={workTime} label="Work Minutes" onChange={(value: number) => setWorkTime(value)} />
+          <SettingControl value={restTime} label="Rest Minutes" onChange={(value: number) => setRestTime(value)} />
+        </section>
+        <TimerOptions
+          playSound={playSound}
+          startWithRest={startWithRest}
+          wakeLockError={wakeLockError}
+          wakeLockLocked={wakeLockLocked}
+          wakeLockSupported={wakeLockSupported}
+          onWakeLockToggle={handleWakeLockToggle}
+        />
+      </div>
 
-      <TimerSummary appliedRestTime={appliedRestTime} appliedWorkTime={appliedWorkTime} mode={mode} />
-      <TimerProgressDisplay maxTime={maxTime} remainingTime={remainingTime} />
+      <div className={isPlaying ? 'grid gap-3' : 'hidden'}>
+        <TimerSummary appliedRestTime={appliedRestTime} appliedWorkTime={appliedWorkTime} />
+      </div>
     </div>
   );
 }

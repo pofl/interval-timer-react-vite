@@ -8,28 +8,23 @@ interface SettingControlProps {
 
 export function SettingControl({value, onChange, label}: SettingControlProps) {
   return (
-    <div className="m-0 flex w-full flex-wrap items-center justify-between gap-1 sm:m-1">
-      <span className="text-neon-pink w-full text-xs font-bold tracking-wider uppercase drop-shadow-[0_0_5px_rgba(255,0,255,0.6)] sm:w-25 sm:text-sm">
+    <div className="grid w-full grid-cols-[1fr_auto] gap-2 border-3 border-ink bg-paper p-2">
+      <span className="self-center text-xs font-bold tracking-wide uppercase">
         {label}
       </span>
-      <Button size="sm" onClick={() => onChange(value - 5)}>
-        -5
-      </Button>
-      <Button size="sm" onClick={() => onChange(value - 1)}>
-        -1
-      </Button>
-      <input
-        className="text-neon-green border-neon-blue focus:border-neon-pink max-w-25 min-w-[2em] grow basis-0 rounded-md border-2 bg-black/60 px-2 py-1 text-center text-sm font-bold shadow-[0_0_10px_rgba(0,255,255,0.3)] transition-all focus:shadow-[0_0_15px_rgba(255,0,255,0.6)] focus:outline-none"
-        type="number"
-        value={value}
-        onChange={(e) => onChange(parseInt(e.target.value))}
-      />
-      <Button size="sm" onClick={() => onChange(value + 1)}>
-        +1
-      </Button>
-      <Button size="sm" onClick={() => onChange(value + 5)}>
-        +5
-      </Button>
+      <div className="flex items-center gap-1">
+        <Button className="bg-yellow" size="sm" aria-label={`Decrease ${label} by five`} onClick={() => onChange(value - 5)}>-5</Button>
+        <Button size="sm" aria-label={`Decrease ${label} by one`} onClick={() => onChange(value - 1)}>-1</Button>
+        <input
+          className="h-9 w-12 border-3 border-ink bg-mint text-center text-sm font-bold outline-none focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-blue"
+          type="number"
+          aria-label={label}
+          value={value}
+          onChange={(e) => onChange(parseInt(e.target.value))}
+        />
+        <Button size="sm" aria-label={`Increase ${label} by one`} onClick={() => onChange(value + 1)}>+1</Button>
+        <Button className="bg-yellow" size="sm" aria-label={`Increase ${label} by five`} onClick={() => onChange(value + 5)}>+5</Button>
+      </div>
     </div>
   );
 }

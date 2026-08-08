@@ -4,8 +4,8 @@ import {cn} from '../../lib/utils';
 type ButtonSize = 'default' | 'sm';
 
 const sizeClassName: Record<ButtonSize, string> = {
-  default: 'px-6 py-3 text-sm tracking-widest',
-  sm: 'px-3 py-1.5 text-xs font-bold',
+  default: 'min-h-12 px-5 py-2 text-sm',
+  sm: 'min-h-9 px-2 text-xs',
 };
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -17,9 +17,9 @@ export function Button({className, size = 'default', type = 'button', ...props}:
     <button
       type={type}
       className={cn(
-        'bg-transparent border-2 border-neon-pink text-neon-pink uppercase',
-        'hover:bg-neon-pink hover:text-dark-bg hover:shadow-[0_0_15px_rgba(255,0,255,0.8)]',
-        'active:scale-95 transition-all duration-200 cursor-pointer rounded-md font-bold focus:outline-none focus:ring-2 focus:ring-neon-purple focus:ring-offset-2 focus:ring-offset-dark-bg',
+        'cursor-pointer border-3 border-ink bg-paper font-bold uppercase shadow-[3px_3px_0_#171717] transition-transform',
+        'hover:-translate-y-0.5 active:translate-x-[3px] active:translate-y-[3px] active:shadow-none',
+        'focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-blue',
         sizeClassName[size],
         className
       )}

@@ -9,15 +9,15 @@ interface TimerActionsProps {
 
 export function TimerActions({isPlaying, remainingTime, onReset, onToggle}: TimerActionsProps) {
   return (
-    <div className="mt-1 flex w-full justify-center gap-2 sm:mt-2 sm:gap-4">
+    <div className="flex w-full gap-3">
       <Button
-        className="border-neon-pink text-neon-pink hover:bg-neon-pink hover:text-dark-bg max-w-[150px] flex-1 bg-transparent shadow-[0_0_10px_rgba(255,0,255,0.4)]"
+        className="flex-1 bg-paper"
         onClick={onReset}
       >
         Reset
       </Button>
       <Button
-        className="bg-neon-blue border-neon-blue text-dark-bg hover:text-neon-blue max-w-[150px] flex-1 shadow-[0_0_15px_rgba(0,255,255,0.6)] hover:bg-transparent"
+        className="flex-1 bg-pink"
         onClick={onToggle}
       >
         {!isPlaying && remainingTime > 0 ? 'Start' : 'Pause'}

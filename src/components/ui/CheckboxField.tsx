@@ -7,16 +7,14 @@ interface CheckboxFieldProps extends Omit<InputHTMLAttributes<HTMLInputElement>,
 
 export function CheckboxField({label, onChange, ...props}: CheckboxFieldProps) {
   return (
-    <label className="flex items-center space-x-3 cursor-pointer group py-1">
+    <label className="flex cursor-pointer items-center gap-2 py-1.5 text-xs font-bold uppercase">
       <input
         type="checkbox"
-        className="w-5 h-5 accent-neon-pink cursor-pointer shadow-[0_0_8px_rgba(255,0,255,0.6)] rounded-sm transition-all"
+        className="h-5 w-5 cursor-pointer accent-pink"
         onChange={onChange}
         {...props}
       />
-      <span className="text-neon-blue group-hover:text-neon-pink transition-colors text-sm uppercase font-bold tracking-wider drop-shadow-[0_0_5px_rgba(0,255,255,0.5)] group-hover:drop-shadow-[0_0_8px_rgba(255,0,255,0.6)]">
-        {label}
-      </span>
+      <span>{label}</span>
     </label>
   );
 }
