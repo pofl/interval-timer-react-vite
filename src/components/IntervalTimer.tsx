@@ -1,5 +1,5 @@
-import {useEffect, useState} from 'react';
-import {setRestTime, setWorkTime, useRestTime, useStartWithRest, useWorkTime} from '../hooks/settings-store';
+import { useEffect, useState } from 'react';
+import { setRestTime, setWorkTime, useRestTime, useStartWithRest, useWorkTime } from '../hooks/settings-store';
 import {
   getModeTime,
   timerStore,
@@ -10,12 +10,12 @@ import {
   usePlaySound,
   useRemainingTime,
 } from '../hooks/timer-store';
-import {useWakeLock} from '../hooks/use-wake-lock';
-import {SettingControl} from './SettingControl';
-import {TimerActions} from './interval-timer/TimerActions';
-import {TimerOptions} from './interval-timer/TimerOptions';
-import {TimerProgressDisplay} from './interval-timer/TimerProgressDisplay';
-import {TimerSummary} from './interval-timer/TimerSummary';
+import { useWakeLock } from '../hooks/use-wake-lock';
+import { SettingControl } from './SettingControl';
+import { TimerActions } from './interval-timer/TimerActions';
+import { TimerOptions } from './interval-timer/TimerOptions';
+import { TimerProgressDisplay } from './interval-timer/TimerProgressDisplay';
+import { TimerSummary } from './interval-timer/TimerSummary';
 
 export function IntervalTimer() {
   const workTime = useWorkTime();
@@ -85,8 +85,8 @@ export function IntervalTimer() {
 
       <div className={isPlaying ? 'hidden' : 'grid gap-3'}>
         <section className="grid gap-2">
-          <SettingControl value={workTime} label="Work Minutes" onChange={(value: number) => setWorkTime(value)} />
-          <SettingControl value={restTime} label="Rest Minutes" onChange={(value: number) => setRestTime(value)} />
+          <SettingControl value={workTime} label="Work Seconds" onChange={(value: number) => setWorkTime(value)} />
+          <SettingControl value={restTime} label="Rest Seconds" onChange={(value: number) => setRestTime(value)} />
         </section>
         <TimerOptions
           playSound={playSound}
