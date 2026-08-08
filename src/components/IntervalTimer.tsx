@@ -68,7 +68,7 @@ export function IntervalTimer() {
 
   return (
     <div className="flex w-full flex-col gap-3 tabular-nums">
-      <section className="border-4 border-ink bg-coral p-3 shadow-[6px_6px_0_#171717] sm:p-4">
+      <section className="brutal-shadow border-4 border-ink bg-coral p-3 sm:p-4">
         <div className="mb-3 flex items-center justify-between">
           <span className="font-display text-sm uppercase">{mode} block</span>
           <span className="bg-ink px-2 py-1 text-[10px] font-bold uppercase text-paper">{isPlaying ? 'In Progress' : 'Ready'}</span>

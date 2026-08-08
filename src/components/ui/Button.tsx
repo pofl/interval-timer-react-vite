@@ -17,7 +17,7 @@ export function Button({className, size = 'default', type = 'button', ...props}:
     <button
       type={type}
       className={cn(
-        'cursor-pointer border-3 border-ink bg-paper font-bold uppercase shadow-[3px_3px_0_#171717] transition-transform',
+        'brutal-shadow-sm cursor-pointer border-3 border-ink bg-paper font-bold uppercase transition-transform',
         'hover:-translate-y-0.5 active:translate-x-[3px] active:translate-y-[3px] active:shadow-none',
         'focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-blue',
         sizeClassName[size],

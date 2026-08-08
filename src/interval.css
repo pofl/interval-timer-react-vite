@@ -5,16 +5,38 @@
   --font-body: 'Space Mono', monospace;
   --font-display: 'Archivo Black', sans-serif;
 
-  --color-ink: #171717;
-  --color-paper: #fff8e8;
-  --color-pink: #ff4fa3;
-  --color-yellow: #ffe84d;
-  --color-blue: #4cc9ff;
-  --color-mint: #8af4c2;
-  --color-coral: #ff775c;
+  --color-ink: var(--theme-ink);
+  --color-paper: var(--theme-paper);
+  --color-pink: var(--theme-pink);
+  --color-yellow: var(--theme-yellow);
+  --color-blue: var(--theme-blue);
+  --color-mint: var(--theme-mint);
+  --color-coral: var(--theme-coral);
 }
 
 @layer base {
+  :root {
+    color-scheme: light;
+    --theme-ink: #171717;
+    --theme-paper: #fff8e8;
+    --theme-pink: #ff4fa3;
+    --theme-yellow: #ffe84d;
+    --theme-blue: #4cc9ff;
+    --theme-mint: #8af4c2;
+    --theme-coral: #ff775c;
+  }
+
+  :root[data-theme='dark'] {
+    color-scheme: dark;
+    --theme-ink: #f6f0df;
+    --theme-paper: #171a1f;
+    --theme-pink: #9f2f5f;
+    --theme-yellow: #766018;
+    --theme-blue: #1c6f91;
+    --theme-mint: #14634d;
+    --theme-coral: #a94738;
+  }
+
   html,
   body,
   #root {
@@ -24,7 +46,7 @@
   body {
     font-family: var(--font-body);
     background-color: var(--color-paper);
-    background-image: radial-gradient(var(--color-ink) 0.75px, transparent 0.75px);
+    background-image: radial-gradient(color-mix(in srgb, var(--color-ink) 25%, transparent) 0.75px, transparent 0.75px);
     background-size: 13px 13px;
     @apply text-ink;
   }
@@ -37,4 +59,12 @@
 
 .font-display {
   font-family: var(--font-display);
+}
+
+.brutal-shadow {
+  box-shadow: 6px 6px 0 var(--color-ink);
+}
+
+.brutal-shadow-sm {
+  box-shadow: 3px 3px 0 var(--color-ink);
 }
