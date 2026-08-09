@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { setRestTime, setWorkTime, useRestTime, useStartWithRest, useWorkTime } from '../hooks/settings-store';
+import { setRestTime, setStartWithRest, setWorkTime, useRestTime, useStartWithRest, useWorkTime } from '../hooks/settings-store';
 import {
   getModeTime,
   timerStore,
@@ -15,7 +15,6 @@ import { SettingControl } from './SettingControl';
 import { TimerActions } from './interval-timer/TimerActions';
 import { TimerOptions } from './interval-timer/TimerOptions';
 import { TimerProgressDisplay } from './interval-timer/TimerProgressDisplay';
-import { TimerSummary } from './interval-timer/TimerSummary';
 
 export function IntervalTimer() {
   const workTime = useWorkTime();
@@ -79,28 +78,41 @@ export function IntervalTimer() {
         onToggle={() => timerStore.send({type: 'toggle'})}
       />
 
-      {isPlaying ? (
-        <TimerSummary appliedRestTime={appliedRestTime} appliedWorkTime={appliedWorkTime} />
-      ) : (
-        <section className="border-t-3 border-ink pt-3 sm:pt-4" aria-labelledby="session-settings-heading">
-          <div className="mb-2 flex items-baseline justify-between gap-3 sm:mb-3">
-            <h2 id="session-settings-heading" className="font-display text-base uppercase sm:text-lg">Session setup</h2>
-            <span className="text-[9px] font-bold uppercase text-muted sm:text-[10px]">Seconds</span>
-          </div>
-          <div className="grid gap-2">
-            <SettingControl value={workTime} label="Work" onChange={(value: number) => setWorkTime(value)} />
-            <SettingControl value={restTime} label="Rest" onChange={(value: number) => setRestTime(value)} />
-          </div>
-          <TimerOptions
-            playSound={playSound}
-            startWithRest={startWithRest}
-            wakeLockError={wakeLockError}
-            wakeLockLocked={wakeLockLocked}
-            wakeLockSupported={wakeLockSupported}
-            onWakeLockToggle={handleWakeLockToggle}
+      <section className="border-t-3 border-ink pt-3 sm:pt-4" aria-labelledby="session-settings-heading">
+        <div className="mb-2 flex items-baseline justify-between gap-3 sm:mb-3">
+          <h2 id="session-settings-heading" className="font-display text-base uppercase sm:text-lg">Session</h2>
+          <span className="text-right text-[9px] font-bold uppercase text-muted sm:text-[10px]">
+            {isPlaying ? 'Locked while running' : 'Choose duration and first interval'}
+          </span>
+        </div>
+        <div className="grid gap-2">
+          <SettingControl
+            value={workTime}
+            appliedValue={appliedWorkTime}
+            isFirst={!startWithRest}
+            isPlaying={isPlaying}
+            label="Work"
+            onChange={setWorkTime}
+            onSelectFirst={() => setStartWithRest(false)}
           />
-        </section>
-      )}
+          <SettingControl
+            value={restTime}
+            appliedValue={appliedRestTime}
+            isFirst={startWithRest}
+            isPlaying={isPlaying}
+            label="Rest"
+            onChange={setRestTime}
+            onSelectFirst={() => setStartWithRest(true)}
+          />
+        </div>
+        <TimerOptions
+          playSound={playSound}
+          wakeLockError={wakeLockError}
+          wakeLockLocked={wakeLockLocked}
+          wakeLockSupported={wakeLockSupported}
+          onWakeLockToggle={handleWakeLockToggle}
+        />
+      </section>
     </div>
   );
 }

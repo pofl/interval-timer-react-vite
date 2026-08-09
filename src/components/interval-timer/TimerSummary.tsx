@@ -5,7 +5,7 @@ interface TimerSummaryProps {
 
 export function TimerSummary({appliedRestTime, appliedWorkTime}: TimerSummaryProps) {
   return (
-    <table className="w-full border-collapse border-2 border-line bg-surface text-xs sm:text-sm">
+    <table className="h-full w-full border-collapse border-2 border-line bg-surface text-xs sm:text-sm">
       <caption className="sr-only">Current interval durations in seconds</caption>
       <tbody>
         <tr className="border-b-2 border-line">
