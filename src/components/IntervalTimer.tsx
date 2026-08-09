@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { setRestTime, setWorkTime, useRestTime, useStartWithRest, useWorkTime } from '../hooks/settings-store';
 import {
   getModeTime,
@@ -59,12 +59,6 @@ export function IntervalTimer() {
       await requestWakeLock();
     }
   };
-
-  useEffect(() => {
-    if (isPlaying) {
-      void requestWakeLock();
-    }
-  }, [isPlaying, requestWakeLock]);
 
   return (
     <div className="flex w-full flex-col gap-3 tabular-nums">
