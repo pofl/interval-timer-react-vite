@@ -7,6 +7,9 @@
 
   --color-ink: var(--theme-ink);
   --color-paper: var(--theme-paper);
+  --color-surface: var(--theme-surface);
+  --color-muted: var(--theme-muted);
+  --color-line: var(--theme-line);
   --color-pink: var(--theme-pink);
   --color-yellow: var(--theme-yellow);
   --color-blue: var(--theme-blue);
@@ -17,24 +20,30 @@
 @layer base {
   :root {
     color-scheme: light;
-    --theme-ink: #171717;
-    --theme-paper: #fff8e8;
-    --theme-pink: #ff4fa3;
-    --theme-yellow: #ffe84d;
-    --theme-blue: #4cc9ff;
-    --theme-mint: #8af4c2;
-    --theme-coral: #ff775c;
+    --theme-ink: #161616;
+    --theme-paper: #f4f1e8;
+    --theme-surface: #fffdf7;
+    --theme-muted: #67645c;
+    --theme-line: #d4d0c5;
+    --theme-pink: #ff5a36;
+    --theme-yellow: #f4c542;
+    --theme-blue: #4a9fc1;
+    --theme-mint: #3faf83;
+    --theme-coral: #ff5a36;
   }
 
   :root[data-theme='dark'] {
     color-scheme: dark;
-    --theme-ink: #f6f0df;
-    --theme-paper: #171a1f;
-    --theme-pink: #9f2f5f;
-    --theme-yellow: #766018;
-    --theme-blue: #1c6f91;
-    --theme-mint: #14634d;
-    --theme-coral: #a94738;
+    --theme-ink: #f4f1e8;
+    --theme-paper: #121313;
+    --theme-surface: #1d1f1e;
+    --theme-muted: #aaa79d;
+    --theme-line: #3a3d3b;
+    --theme-pink: #ff6847;
+    --theme-yellow: #e7bd45;
+    --theme-blue: #55a9cb;
+    --theme-mint: #49ba91;
+    --theme-coral: #ff6847;
   }
 
   html,
@@ -46,8 +55,8 @@
   body {
     font-family: var(--font-body);
     background-color: var(--color-paper);
-    background-image: radial-gradient(color-mix(in srgb, var(--color-ink) 25%, transparent) 0.75px, transparent 0.75px);
-    background-size: 13px 13px;
+    background-image: linear-gradient(var(--color-line) 1px, transparent 1px), linear-gradient(90deg, var(--color-line) 1px, transparent 1px);
+    background-size: 32px 32px;
     @apply text-ink;
   }
 
@@ -62,9 +71,9 @@
 }
 
 .brutal-shadow {
-  box-shadow: 6px 6px 0 var(--color-ink);
+  box-shadow: 5px 5px 0 var(--color-ink);
 }
 
 .brutal-shadow-sm {
-  box-shadow: 3px 3px 0 var(--color-ink);
+  box-shadow: 2px 2px 0 var(--color-ink);
 }

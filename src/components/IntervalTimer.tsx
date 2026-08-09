@@ -61,11 +61,14 @@ export function IntervalTimer() {
   };
 
   return (
-    <div className="flex w-full flex-col gap-3 tabular-nums">
-      <section className="brutal-shadow border-4 border-ink bg-coral p-3 sm:p-4">
-        <div className="mb-3 flex items-center justify-between">
-          <span className="font-display text-sm uppercase">{mode} block</span>
-          <span className="bg-ink px-2 py-1 text-[10px] font-bold uppercase text-paper">{isPlaying ? 'In Progress' : 'Ready'}</span>
+    <div className="flex w-full flex-col gap-3 tabular-nums sm:gap-4">
+      <section className="brutal-shadow border-3 border-ink bg-surface p-3 sm:p-6" aria-label={`${mode} timer`}>
+        <div className="mb-2 flex items-center justify-between gap-3">
+          <span className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide sm:text-sm">
+            <span className={`h-3 w-3 border-2 border-ink ${mode === 'work' ? 'bg-mint' : 'bg-blue'}`} aria-hidden="true" />
+            {mode}
+          </span>
+          <span className="text-[10px] font-bold uppercase text-muted sm:text-xs">{isPlaying ? 'Running' : 'Ready'}</span>
         </div>
         <TimerProgressDisplay maxTime={maxTime} remainingTime={remainingTime} mode={mode} />
       </section>
@@ -76,24 +79,28 @@ export function IntervalTimer() {
         onToggle={() => timerStore.send({type: 'toggle'})}
       />
 
-      <div className={isPlaying ? 'hidden' : 'grid gap-3'}>
-        <section className="grid gap-2">
-          <SettingControl value={workTime} label="Work Seconds" onChange={(value: number) => setWorkTime(value)} />
-          <SettingControl value={restTime} label="Rest Seconds" onChange={(value: number) => setRestTime(value)} />
-        </section>
-        <TimerOptions
-          playSound={playSound}
-          startWithRest={startWithRest}
-          wakeLockError={wakeLockError}
-          wakeLockLocked={wakeLockLocked}
-          wakeLockSupported={wakeLockSupported}
-          onWakeLockToggle={handleWakeLockToggle}
-        />
-      </div>
-
-      <div className={isPlaying ? 'grid gap-3' : 'hidden'}>
+      {isPlaying ? (
         <TimerSummary appliedRestTime={appliedRestTime} appliedWorkTime={appliedWorkTime} />
-      </div>
+      ) : (
+        <section className="border-t-3 border-ink pt-3 sm:pt-4" aria-labelledby="session-settings-heading">
+          <div className="mb-2 flex items-baseline justify-between gap-3 sm:mb-3">
+            <h2 id="session-settings-heading" className="font-display text-base uppercase sm:text-lg">Session setup</h2>
+            <span className="text-[9px] font-bold uppercase text-muted sm:text-[10px]">Seconds</span>
+          </div>
+          <div className="grid gap-2">
+            <SettingControl value={workTime} label="Work" onChange={(value: number) => setWorkTime(value)} />
+            <SettingControl value={restTime} label="Rest" onChange={(value: number) => setRestTime(value)} />
+          </div>
+          <TimerOptions
+            playSound={playSound}
+            startWithRest={startWithRest}
+            wakeLockError={wakeLockError}
+            wakeLockLocked={wakeLockLocked}
+            wakeLockSupported={wakeLockSupported}
+            onWakeLockToggle={handleWakeLockToggle}
+          />
+        </section>
+      )}
     </div>
   );
 }

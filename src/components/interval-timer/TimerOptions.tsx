@@ -1,6 +1,6 @@
-import {setStartWithRest} from '../../hooks/settings-store';
-import {setPlaySound} from '../../hooks/timer-store';
-import {CheckboxField} from '../ui/CheckboxField';
+import { setStartWithRest } from '../../hooks/settings-store';
+import { setPlaySound } from '../../hooks/timer-store';
+import { CheckboxField } from '../ui/CheckboxField';
 
 interface TimerOptionsProps {
   playSound: boolean;
@@ -20,15 +20,15 @@ export function TimerOptions({
   onWakeLockToggle,
 }: TimerOptionsProps) {
   return (
-    <div className="grid w-full grid-cols-2 gap-x-3 border-3 border-ink bg-blue px-3 py-1">
-      <div>
+    <div className="mt-2 grid w-full grid-cols-2 gap-x-3 border-2 border-line bg-surface px-3 py-1 sm:grid-cols-3 sm:gap-x-4 sm:py-2">
+      <div className="border-r border-b border-line sm:border-b-0">
         <CheckboxField
           checked={startWithRest}
           label="Start with Rest"
           onChange={(event) => setStartWithRest(event.target.checked)}
         />
       </div>
-      <div>
+      <div className="border-b border-line sm:border-r sm:border-b-0">
         {wakeLockError ? (
           <span className="text-xs font-bold uppercase text-ink">
             Screen lock error: {wakeLockError}
@@ -45,7 +45,7 @@ export function TimerOptions({
           />
         )}
       </div>
-      <div>
+      <div className="col-span-2 sm:col-span-1">
         <CheckboxField
           checked={playSound}
           label="Play sound"

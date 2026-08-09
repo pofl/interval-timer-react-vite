@@ -1,4 +1,4 @@
-import {Button} from '../ui/Button';
+import { Button } from '../ui/Button';
 
 interface TimerActionsProps {
   isPlaying: boolean;
@@ -8,15 +8,15 @@ interface TimerActionsProps {
 
 export function TimerActions({isPlaying, onReset, onToggle}: TimerActionsProps) {
   return (
-    <div className="flex w-full gap-3">
+    <div className="grid w-full grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)] gap-3">
       <Button
-        className="flex-1 bg-paper"
+        className="bg-surface"
         onClick={onReset}
       >
         Reset
       </Button>
       <Button
-        className="flex-1 bg-pink"
+        className="bg-pink text-ink"
         onClick={onToggle}
       >
         {isPlaying ? 'Pause' : 'Play'}

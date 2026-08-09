@@ -30,25 +30,26 @@ export function App() {
   }, [themePreference]);
 
   return (
-    <main className="flex min-h-[100dvh] w-full items-center justify-center px-3 py-3 sm:p-6">
-      <div className="w-full max-w-xl">
-        <header className="mb-3 flex items-end justify-between border-b-4 border-ink pb-2 sm:mb-4">
-          <h1 className="font-display text-2xl leading-none uppercase sm:text-3xl">Interval<br />Timer</h1>
-          <div className="flex flex-col items-end gap-2">
-            <span className="brutal-shadow-sm bg-yellow px-2 py-1 text-[10px] font-bold uppercase">Go Mode</span>
-            <div className="flex border-2 border-ink text-[9px] font-bold uppercase">
+    <main className="flex min-h-[100dvh] w-full justify-center px-3 py-2 sm:px-6 sm:py-10">
+      <div className="w-full max-w-2xl">
+        <header className="mb-3 flex items-center justify-between gap-4 border-b-3 border-ink pb-3 sm:mb-7 sm:pb-4">
+          <h1 className="font-display text-[clamp(1.5rem,6vw,2.5rem)] leading-none uppercase">Interval Timer</h1>
+          <div
+            className="flex shrink-0 border-2 border-ink bg-surface text-[10px] font-bold uppercase sm:text-xs"
+            role="group"
+            aria-label="Color theme"
+          >
               {(['system', 'light', 'dark'] as const).map((theme) => (
                 <button
                   key={theme}
                   type="button"
                   aria-pressed={themePreference === theme}
-                  className={`min-h-7 border-r-2 border-ink px-1.5 last:border-r-0 ${themePreference === theme ? 'bg-pink' : 'bg-paper'}`}
+                  className={`min-h-9 border-r-2 border-ink px-2 transition-colors last:border-r-0 sm:px-3 ${themePreference === theme ? 'bg-ink text-paper' : 'hover:bg-line'}`}
                   onClick={() => setThemePreference(theme)}
                 >
                   {theme === 'system' ? 'Auto' : theme}
                 </button>
               ))}
-            </div>
           </div>
         </header>
         <IntervalTimer />
