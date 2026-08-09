@@ -72,7 +72,6 @@ export function IntervalTimer() {
 
       <TimerActions
         isPlaying={isPlaying}
-        remainingTime={remainingTime}
         onReset={reset}
         onToggle={() => timerStore.send({type: 'toggle'})}
       />

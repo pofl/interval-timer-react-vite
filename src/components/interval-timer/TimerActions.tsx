@@ -2,12 +2,11 @@ import {Button} from '../ui/Button';
 
 interface TimerActionsProps {
   isPlaying: boolean;
-  remainingTime: number;
   onReset: () => void;
   onToggle: () => void;
 }
 
-export function TimerActions({isPlaying, remainingTime, onReset, onToggle}: TimerActionsProps) {
+export function TimerActions({isPlaying, onReset, onToggle}: TimerActionsProps) {
   return (
     <div className="flex w-full gap-3">
       <Button
@@ -20,7 +19,7 @@ export function TimerActions({isPlaying, remainingTime, onReset, onToggle}: Time
         className="flex-1 bg-pink"
         onClick={onToggle}
       >
-        {!isPlaying && remainingTime > 0 ? 'Start' : 'Pause'}
+        {isPlaying ? 'Pause' : 'Play'}
       </Button>
     </div>
   );
