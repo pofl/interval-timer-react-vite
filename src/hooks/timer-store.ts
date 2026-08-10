@@ -12,12 +12,14 @@ const sound = new Audio('https://cdn.freesound.org/previews/366/366102_6687700-l
 export const modes = ['work', 'rest'] as const;
 
 export type Mode = (typeof modes)[number];
+export type TimerState = 'settings' | 'playing' | 'paused';
 
 export const timerStore = createStore({
   context: {
     workTime: parseInt(localStorage.getItem(storageKeyWorkTime) || '25'),
     restTime: parseInt(localStorage.getItem(storageKeyRestTime) || '5'),
     mode: 'rest' as Mode,
+    timerState: 'settings' as TimerState,
     isPlaying: false,
     interval: 0,
     remainingTime: 0,
@@ -28,20 +30,34 @@ export const timerStore = createStore({
   //   paused: () => {},
   // },
   on: {
-    toggle: (context) => {
-      const nextIsPlaying = !context.isPlaying;
-      let nextInterval = context.interval;
-      if (nextIsPlaying) {
-        nextInterval = setInterval(tick, 1000);
-      } else {
-        clearInterval(context.interval);
-        nextInterval = 0;
-      }
-
+    start: (context, event: {mode: Mode; workTime: number; restTime: number}) => {
+      clearInterval(context.interval);
       return {
         ...context,
-        isPlaying: nextIsPlaying,
-        interval: nextInterval,
+        workTime: event.workTime,
+        restTime: event.restTime,
+        mode: event.mode,
+        remainingTime: getModeTime(event, event.mode),
+        timerState: 'playing' as TimerState,
+        isPlaying: true,
+        interval: setInterval(tick, 1000),
+      };
+    },
+    pause: (context) => {
+      clearInterval(context.interval);
+      return {
+        ...context,
+        timerState: 'paused' as TimerState,
+        isPlaying: false,
+        interval: 0,
+      };
+    },
+    resume: (context) => {
+      return {
+        ...context,
+        timerState: 'playing' as TimerState,
+        isPlaying: true,
+        interval: setInterval(tick, 1000),
       };
     },
     tick: (context) => {
@@ -64,12 +80,17 @@ export const timerStore = createStore({
       };
     },
     switchToNextMode: (context) => {
+      if (context.timerState !== 'playing') {
+        return context;
+      }
+
       const nextModeIndex = (modes.indexOf(context.mode) + 1) % modes.length;
       const nextMode = modes[nextModeIndex];
       const nextRemainingTime = getModeTime(context, nextMode);
       return {
         ...context,
         interval: setInterval(tick, 1000),
+        timerState: 'playing' as TimerState,
         isPlaying: true,
         mode: modes[nextModeIndex],
         remainingTime: nextRemainingTime,
@@ -79,6 +100,7 @@ export const timerStore = createStore({
       clearInterval(context.interval);
       return {
         ...context,
+        timerState: 'settings' as TimerState,
         isPlaying: false,
         interval: 0,
         mode: event.mode,
@@ -108,6 +130,7 @@ export function getModeTime(obj: {workTime: number; restTime: number}, mode: Mod
 export const setPlaySound = (playSound: boolean) => timerStore.send({type: 'setPlaySound', playSound});
 const tick = () => timerStore.send({type: 'tick'});
 export const useIsPlaying = () => useSelector(timerStore, (state) => state.context.isPlaying);
+export const useTimerState = () => useSelector(timerStore, (state) => state.context.timerState);
 export const useRemainingTime = () => useSelector(timerStore, (state) => state.context.remainingTime);
 export const useMode = () => useSelector(timerStore, (state) => state.context.mode);
 export const usePlaySound = () => useSelector(timerStore, (state) => state.context.playSound);

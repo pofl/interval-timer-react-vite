@@ -5,10 +5,10 @@ import {
   timerStore,
   useAppliedRestTime,
   useAppliedWorkTime,
-  useIsPlaying,
   useMode,
   usePlaySound,
   useRemainingTime,
+  useTimerState,
 } from '../hooks/timer-store';
 import { useWakeLock } from '../hooks/use-wake-lock';
 import { SettingControl } from './SettingControl';
@@ -24,7 +24,7 @@ export function IntervalTimer() {
   const startWithRest = useStartWithRest();
   const playSound = usePlaySound();
   const mode = useMode();
-  const isPlaying = useIsPlaying();
+  const timerState = useTimerState();
   const remainingTime = useRemainingTime();
 
   const initialMode = startWithRest ? 'rest' : 'work';
@@ -33,6 +33,10 @@ export function IntervalTimer() {
 
   const reset = () => {
     timerStore.send({type: 'reset', mode: initialMode, workTime, restTime});
+  };
+
+  const start = () => {
+    timerStore.send({type: 'start', mode: initialMode, workTime, restTime});
   };
 
   const [wakeLockError, setError] = useState<string | null>(null);
@@ -67,22 +71,23 @@ export function IntervalTimer() {
             <span className={`h-3 w-3 border-2 border-ink ${mode === 'work' ? 'bg-mint' : 'bg-blue'}`} aria-hidden="true" />
             {mode}
           </span>
-          <span className="text-[10px] font-bold uppercase text-muted sm:text-xs">{isPlaying ? 'Running' : 'Ready'}</span>
+          <span className="text-[10px] font-bold uppercase text-muted sm:text-xs">{timerState === 'playing' ? 'Running' : timerState === 'paused' ? 'Paused' : 'Settings'}</span>
         </div>
         <TimerProgressDisplay maxTime={maxTime} remainingTime={remainingTime} mode={mode} />
       </section>
 
       <TimerActions
-        isPlaying={isPlaying}
-        onReset={reset}
-        onToggle={() => timerStore.send({type: 'toggle'})}
+        timerState={timerState}
+        onPlay={timerState === 'paused' ? () => timerStore.send({type: 'resume'}) : start}
+        onPause={() => timerStore.send({type: 'pause'})}
+        onStop={reset}
       />
 
       <section className="border-t-3 border-ink pt-3 sm:pt-4" aria-labelledby="session-settings-heading">
         <div className="mb-2 flex items-baseline justify-between gap-3 sm:mb-3">
           <h2 id="session-settings-heading" className="font-display text-base uppercase sm:text-lg">Session</h2>
           <span className="text-right text-[9px] font-bold uppercase text-muted sm:text-[10px]">
-            {isPlaying ? 'Locked while running' : 'Choose duration and first interval'}
+            {timerState === 'settings' ? 'Choose duration and first interval' : 'Locked during a session'}
           </span>
         </div>
         <div className="grid gap-2">
@@ -90,7 +95,7 @@ export function IntervalTimer() {
             value={workTime}
             appliedValue={appliedWorkTime}
             isFirst={!startWithRest}
-            isPlaying={isPlaying}
+            isPlaying={timerState !== 'settings'}
             label="Work"
             onChange={setWorkTime}
             onSelectFirst={() => setStartWithRest(false)}
@@ -99,7 +104,7 @@ export function IntervalTimer() {
             value={restTime}
             appliedValue={appliedRestTime}
             isFirst={startWithRest}
-            isPlaying={isPlaying}
+            isPlaying={timerState !== 'settings'}
             label="Rest"
             onChange={setRestTime}
             onSelectFirst={() => setStartWithRest(true)}
