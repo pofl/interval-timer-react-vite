@@ -26,9 +26,9 @@ export function SettingControl({
   };
 
   return (
-    <div className="grid w-full grid-cols-[3.25rem_minmax(0,1fr)] gap-2 border-2 border-line bg-surface p-2 sm:grid-cols-[1fr_auto] sm:p-3">
+    <div className={`grid w-full gap-2 border-2 border-line bg-surface p-2 sm:p-3 ${isPlaying ? 'grid-cols-[minmax(0,1fr)_auto]' : 'grid-cols-[3.25rem_minmax(0,1fr)] sm:grid-cols-[1fr_auto]'}`}>
       <div className="flex min-h-11 flex-col justify-center">
-        <span className="text-xs font-bold uppercase tracking-wide">{label}</span>
+        <span className={isPlaying ? 'font-display text-lg uppercase' : 'text-xs font-bold uppercase tracking-wide'}>{label}</span>
         {!isPlaying ? (
           <label className="mt-1 flex cursor-pointer items-center gap-1.5 text-[9px] font-bold uppercase text-muted">
             <input
@@ -40,12 +40,10 @@ export function SettingControl({
             />
             First
           </label>
-        ) : (
-          <span className="mt-1 h-3.5" aria-hidden="true" />
-        )}
+        ) : null}
       </div>
       {isPlaying ? (
-        <div className="flex min-h-11 items-center justify-end border-l-2 border-line pl-3">
+        <div className="flex min-h-11 items-center justify-end">
           <span className="font-display text-2xl leading-none">{appliedValue}</span>
           <span className="ml-1.5 text-[9px] font-bold uppercase text-muted">sec</span>
         </div>
