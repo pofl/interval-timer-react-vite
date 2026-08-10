@@ -28,8 +28,13 @@ export function IntervalTimer() {
   const remainingTime = useRemainingTime();
 
   const initialMode = startWithRest ? 'rest' : 'work';
+  const displayMode = timerState === 'settings' ? initialMode : mode;
+    const displayTimes = timerState === 'settings'
+      ? {workTime, restTime}
+      : {workTime: appliedWorkTime, restTime: appliedRestTime};
 
-  const maxTime = getModeTime({workTime: appliedWorkTime, restTime: appliedRestTime}, mode);
+    const maxTime = getModeTime(displayTimes, displayMode);
+  const displayRemainingTime = timerState === 'settings' ? maxTime : remainingTime;
 
   const reset = () => {
     timerStore.send({type: 'reset', mode: initialMode, workTime, restTime});
@@ -65,15 +70,15 @@ export function IntervalTimer() {
 
   return (
     <div className="flex w-full flex-col gap-3 tabular-nums sm:gap-4">
-      <section className="brutal-shadow border-3 border-ink bg-surface p-3 sm:p-6" aria-label={`${mode} timer`}>
+      <section className="brutal-shadow border-3 border-ink bg-surface p-3 sm:p-6" aria-label={`${displayMode} timer`}>
         <div className="mb-2 flex items-center justify-between gap-3">
           <span className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide sm:text-sm">
-            <span className={`h-3 w-3 border-2 border-ink ${mode === 'work' ? 'bg-mint' : 'bg-blue'}`} aria-hidden="true" />
-            {mode}
+            <span className={`h-3 w-3 border-2 border-ink ${displayMode === 'work' ? 'bg-mint' : 'bg-blue'}`} aria-hidden="true" />
+            {displayMode}
           </span>
           <span className="text-[10px] font-bold uppercase text-muted sm:text-xs">{timerState === 'playing' ? 'Running' : timerState === 'paused' ? 'Paused' : 'Settings'}</span>
         </div>
-        <TimerProgressDisplay maxTime={maxTime} remainingTime={remainingTime} mode={mode} />
+        <TimerProgressDisplay maxTime={maxTime} remainingTime={displayRemainingTime} mode={displayMode} />
       </section>
 
       <TimerActions
