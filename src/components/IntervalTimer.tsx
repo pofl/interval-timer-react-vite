@@ -94,6 +94,7 @@ export function IntervalTimer() {
           <SettingControl
             value={workTime}
             appliedValue={appliedWorkTime}
+            mode="work"
             isFirst={!startWithRest}
             isPlaying={timerState !== 'settings'}
             label="Work"
@@ -103,6 +104,7 @@ export function IntervalTimer() {
           <SettingControl
             value={restTime}
             appliedValue={appliedRestTime}
+            mode="rest"
             isFirst={startWithRest}
             isPlaying={timerState !== 'settings'}
             label="Rest"

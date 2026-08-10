@@ -3,6 +3,7 @@ import { Button } from './ui/Button';
 interface SettingControlProps {
   value: number;
   appliedValue: number;
+  mode: 'work' | 'rest';
   isFirst: boolean;
   isPlaying: boolean;
   onChange: (newValue: number) => void;
@@ -13,6 +14,7 @@ interface SettingControlProps {
 export function SettingControl({
   value,
   appliedValue,
+  mode,
   isFirst,
   isPlaying,
   onChange,
@@ -28,7 +30,10 @@ export function SettingControl({
   return (
     <div className={`grid w-full gap-2 border-2 border-line bg-surface p-2 sm:p-3 ${isPlaying ? 'grid-cols-[minmax(0,1fr)_auto]' : 'grid-cols-[3.25rem_minmax(0,1fr)] sm:grid-cols-[1fr_auto]'}`}>
       <div className="flex min-h-11 flex-col justify-center">
-        <span className={isPlaying ? 'font-display text-lg uppercase' : 'text-xs font-bold uppercase tracking-wide'}>{label}</span>
+        <span className={`flex items-center gap-1.5 ${isPlaying ? 'font-display text-lg uppercase' : 'text-xs font-bold uppercase tracking-wide'}`}>
+          <span className={`h-3 w-3 shrink-0 border-2 border-ink ${mode === 'work' ? 'bg-mint' : 'bg-blue'}`} aria-hidden="true" />
+          {label}
+        </span>
         {!isPlaying ? (
           <label className="mt-1 flex cursor-pointer items-center gap-1.5 text-[9px] font-bold uppercase text-muted">
             <input
